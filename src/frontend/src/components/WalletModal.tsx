@@ -34,7 +34,7 @@ export function WalletModal({ open, onClose }: WalletModalProps) {
         </DialogHeader>
         <div className="space-y-3 pt-2">
           <p className="text-muted-foreground text-sm">
-            Connect your wallet to verify NFT and CoinX holdings. No
+            Connect your wallet to verify NFT and Token holdings. No
             transactions will be executed.
           </p>
           <div className="space-y-3 pt-2">

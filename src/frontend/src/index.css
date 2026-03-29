@@ -107,6 +107,11 @@
     }
   }
 
+  .plan-free {
+    border-color: #4ade80;
+    box-shadow: 0 0 24px 0 rgba(74, 222, 128, 0.25);
+  }
+
   .plan-copper {
     border-color: #b87333;
     box-shadow: 0 0 24px 0 rgba(184, 115, 51, 0.25);

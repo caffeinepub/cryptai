@@ -25,6 +25,15 @@ const ReadingTimerContext = createContext<ReadingTimerContextValue>({
   resetTimer: () => {},
 });
 
+// Global callback so AuthContext can trigger timer reset externally
+let _onTimerReset: (() => void) | null = null;
+export function setTimerResetCallback(cb: () => void) {
+  _onTimerReset = cb;
+}
+export function triggerTimerReset() {
+  if (_onTimerReset) _onTimerReset();
+}
+
 export function ReadingTimerProvider({
   children,
 }: { children: React.ReactNode }) {
@@ -44,10 +53,16 @@ export function ReadingTimerProvider({
     return Math.max(0, TIMER_DURATION - elapsed);
   });
 
-  // Startet den Timer neu (Entwickler-Funktion)
+  // Startet den Timer neu
   const resetTimer = useCallback(() => {
     sessionStorage.setItem(TIMER_KEY, Date.now().toString());
     setSecondsLeft(TIMER_DURATION);
+  }, []);
+
+  // Register global callback so AuthContext can call resetTimer on adminnotregistred login
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional
+  useEffect(() => {
+    setTimerResetCallback(resetTimer);
   }, []);
 
   // Starte den Session-Timer beim ersten Laden (wenn nicht eingeloggt)

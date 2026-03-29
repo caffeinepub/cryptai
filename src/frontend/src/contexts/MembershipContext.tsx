@@ -3,13 +3,29 @@ import { COIN_THRESHOLDS, CONTRACT_ADDRESSES } from "../config/contracts";
 import { useAuth } from "./AuthContext";
 import { useWallet } from "./WalletContext";
 
-export type MembershipLevel = "free" | "basic" | "premium" | "vip";
+export type MembershipLevel =
+  | "uncreamed"
+  | "creamed"
+  | "extracreamed"
+  | "creamy";
 
 const LEVEL_ORDER: Record<MembershipLevel, number> = {
-  free: 0,
-  basic: 1,
-  premium: 2,
-  vip: 3,
+  uncreamed: 0,
+  creamed: 1,
+  extracreamed: 2,
+  creamy: 3,
+};
+
+// Map old content-level labels to new plan IDs for canAccess
+const CONTENT_LEVEL_MAP: Record<string, MembershipLevel> = {
+  free: "uncreamed",
+  basic: "creamed",
+  premium: "extracreamed",
+  vip: "creamy",
+  uncreamed: "uncreamed",
+  creamed: "creamed",
+  extracreamed: "extracreamed",
+  creamy: "creamy",
 };
 
 interface MembershipContextValue {
@@ -19,7 +35,7 @@ interface MembershipContextValue {
 }
 
 const MembershipContext = createContext<MembershipContextValue>({
-  membershipLevel: "free",
+  membershipLevel: "uncreamed",
   canAccess: () => false,
   isChecking: false,
 });
@@ -35,7 +51,7 @@ export function MembershipProvider({
   } = useWallet();
   const { currentUser } = useAuth();
   const [membershipLevel, setMembershipLevel] =
-    useState<MembershipLevel>("free");
+    useState<MembershipLevel>("uncreamed");
   const [isChecking, setIsChecking] = useState(false);
 
   const adminPlanOverride = currentUser?.adminPlan as
@@ -47,7 +63,7 @@ export function MembershipProvider({
     if (adminPlanOverride) {
       setMembershipLevel(adminPlanOverride);
     } else if (!isConnected) {
-      setMembershipLevel("free");
+      setMembershipLevel("uncreamed");
     }
   }, [adminPlanOverride, isConnected]);
 
@@ -59,7 +75,7 @@ export function MembershipProvider({
     }
 
     if (!isConnected || !connectedAddress) {
-      setMembershipLevel("free");
+      setMembershipLevel("uncreamed");
       return;
     }
 
@@ -74,13 +90,13 @@ export function MembershipProvider({
         ]);
 
         if (vipNFT || coinBalance >= COIN_THRESHOLDS.vip) {
-          setMembershipLevel("vip");
+          setMembershipLevel("creamy");
         } else if (premiumNFT || coinBalance >= COIN_THRESHOLDS.premium) {
-          setMembershipLevel("premium");
+          setMembershipLevel("extracreamed");
         } else if (basicNFT || coinBalance >= COIN_THRESHOLDS.basic) {
-          setMembershipLevel("basic");
+          setMembershipLevel("creamed");
         } else {
-          setMembershipLevel("free");
+          setMembershipLevel("uncreamed");
         }
       } finally {
         setIsChecking(false);
@@ -97,7 +113,8 @@ export function MembershipProvider({
   ]);
 
   const canAccess = (level: string): boolean => {
-    const required = LEVEL_ORDER[level as MembershipLevel] ?? 0;
+    const mappedLevel = CONTENT_LEVEL_MAP[level];
+    const required = mappedLevel ? LEVEL_ORDER[mappedLevel] : 0;
     return LEVEL_ORDER[membershipLevel] >= required;
   };
 

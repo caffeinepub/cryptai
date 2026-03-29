@@ -58,7 +58,7 @@ const ARTICLES: Article[] = [
     typeLabel: "Article",
     arabic_only: false,
   },
-  // Basic articles
+  // Creamed (basic) articles
   {
     id: "b1",
     title: "DeFi Yield Strategies for 2025: A Practical Guide",
@@ -111,7 +111,7 @@ const ARTICLES: Article[] = [
     typeLabel: "Video",
     arabic_only: false,
   },
-  // Premium articles
+  // Extra Creamed (premium) articles
   {
     id: "p1",
     title: "Institutional Crypto Accumulation: On-Chain Evidence",
@@ -164,7 +164,7 @@ const ARTICLES: Article[] = [
     typeLabel: "Graphic",
     arabic_only: false,
   },
-  // VIP articles
+  // Creamy (VIP) articles
   {
     id: "v1",
     title: "Exclusive: Q2 2025 Crypto Market Outlook",
@@ -254,19 +254,19 @@ export function ArticlesSection() {
     ...vipArticles,
   ];
 
-  // Determine access per article
+  // Determine access per article using new membership level names
   const getAccess = (article: Article, indexInLevel: number): boolean => {
     const level = membershipLevel;
 
-    if (level === "vip") return true;
-    if (level === "premium") {
+    if (level === "creamy") return true;
+    if (level === "extracreamed") {
       return article.accessLevel !== "vip";
     }
-    if (level === "basic") {
+    if (level === "creamed") {
       return article.accessLevel === "free" || article.accessLevel === "basic";
     }
 
-    // free / not logged in
+    // uncreamed / not logged in
     if (article.accessLevel === "free") {
       if (!isLoggedIn) {
         // Only first free article

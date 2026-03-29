@@ -163,7 +163,7 @@ export function MusicPlayer() {
     >
       <div
         className={`${bg} ${text} rounded-2xl px-4 py-3 shadow-xl`}
-        style={{ width: "100%", maxWidth: "400px" }}
+        style={{ width: "100%", maxWidth: "520px" }}
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-2">
@@ -305,11 +305,11 @@ export function MusicPlayer() {
                 <span
                   style={{
                     color: GOLD,
-                    fontSize: "9px",
+                    fontSize: "10px",
                     opacity: 0.85,
                     whiteSpace: "nowrap",
                     overflow: "hidden",
-                    maxWidth: "95px",
+                    maxWidth: "160px",
                   }}
                 >
                   {downloadHint}

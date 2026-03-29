@@ -6,6 +6,7 @@ import {
   type TranslationKey,
   getRegionLanguageConfig,
 } from "../config/regions";
+import { ALL_ADMIN_USERNAMES, SESSION_KEY } from "./AuthContext";
 
 // Callback so AuthContext can trigger language load on login
 let _onLanguageLoad: ((lang: string) => void) | null = null;
@@ -47,10 +48,25 @@ const LanguageContext = createContext<LanguageContextValue>({
   isRTL: false,
 });
 
-// All 7 languages for account settings
+// All 11 supported languages
 export const ALL_LANGUAGES = Object.entries(LANGUAGE_LABELS)
-  .filter(([code]) => ["en", "de", "fr", "ar", "es", "tr", "fa"].includes(code))
+  .filter(([code]) =>
+    ["en", "de", "fr", "ar", "es", "tr", "fa", "pt", "it", "zh", "ja"].includes(
+      code,
+    ),
+  )
   .map(([code, label]) => ({ code, label }));
+
+function isAdminSession(): boolean {
+  try {
+    const session = localStorage.getItem(SESSION_KEY);
+    if (!session) return false;
+    const user = JSON.parse(session);
+    return ALL_ADMIN_USERNAMES.includes(user?.username?.toLowerCase());
+  } catch {
+    return false;
+  }
+}
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const countryCode = detectCountryCode();
@@ -63,6 +79,20 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const saved = localStorage.getItem("cryptai-lang") as Language | null;
     return saved || regionConfig.defaultLang;
   });
+
+  const [adminMode, setAdminMode] = useState<boolean>(() => isAdminSession());
+
+  // Listen for session changes dispatched by AuthContext (same-tab login/logout)
+  useEffect(() => {
+    const handleSessionChange = () => setAdminMode(isAdminSession());
+    window.addEventListener("cryptai-session-change", handleSessionChange);
+    // Also catch cross-tab changes
+    window.addEventListener("storage", handleSessionChange);
+    return () => {
+      window.removeEventListener("cryptai-session-change", handleSessionChange);
+      window.removeEventListener("storage", handleSessionChange);
+    };
+  }, []);
 
   const setLanguage = (lang: Language) => {
     setCurrentLanguage(lang);
@@ -93,11 +123,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const isRTL = currentLanguage === "ar" || currentLanguage === "fa";
 
+  // Admins see all 11 languages; regular users see region-based options
+  const availableLanguages = adminMode
+    ? ALL_LANGUAGES
+    : regionConfig.availableOptions;
+
   return (
     <LanguageContext.Provider
       value={{
         currentLanguage,
-        availableLanguages: regionConfig.availableOptions,
+        availableLanguages,
         isArabicRegion,
         setLanguage,
         loadFromAccount,

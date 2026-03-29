@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { triggerTimerReset } from "./ReadingTimerContext";
 
 interface StoredUser {
   username: string;
@@ -45,15 +46,22 @@ const AuthContext = createContext<AuthContextValue>({
 });
 
 const USERS_KEY = "cryptai-users";
-const SESSION_KEY = "cryptai-session";
+export const SESSION_KEY = "cryptai-session";
 
 const ADMIN_PASSWORD = "123456789";
+// Admin usernames → plan IDs (new naming)
 const ADMIN_USERS: Record<string, string> = {
-  adminfree: "free",
-  adminbasic: "basic",
-  adminpremium: "premium",
-  adminvip: "vip",
+  adminuncreamed: "uncreamed",
+  admincreamed: "creamed",
+  adminextracreamed: "extracreamed",
+  admincreamy: "creamy",
 };
+
+// All admin usernames (including notregistred)
+export const ALL_ADMIN_USERNAMES = [
+  ...Object.keys(ADMIN_USERS),
+  "adminnotregistred",
+];
 
 function getUsers(): StoredUser[] {
   try {
@@ -87,6 +95,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else {
       localStorage.removeItem(SESSION_KEY);
     }
+    // Notify LanguageContext that session changed (same-tab event)
+    window.dispatchEvent(new CustomEvent("cryptai-session-change"));
   }, [currentUser]);
 
   const register = (
@@ -115,6 +125,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     password: string,
   ): { success: boolean; error?: string } => {
     const lowerUsername = username.toLowerCase();
+
+    // adminnotregistred: reset timer, do NOT log in (simulate unregistered view)
+    if (lowerUsername === "adminnotregistred" && password === ADMIN_PASSWORD) {
+      triggerTimerReset();
+      setCurrentUser(null);
+      return { success: true };
+    }
 
     // Admin bypass
     if (

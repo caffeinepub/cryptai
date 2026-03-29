@@ -5,7 +5,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { CircleDot, Info, Menu, Moon, Sun, User, Wallet } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SOCIAL_LINKS } from "../config/app.config";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -13,6 +13,7 @@ import { triggerPlayerOpen } from "../contexts/MusicPlayerContext";
 import { useReadingTimer } from "../contexts/ReadingTimerContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useWallet } from "../contexts/WalletContext";
+import { setRegisterCallback } from "../utils/registerTrigger";
 import { AccountSettingsModal } from "./AccountSettingsModal";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { LoginRegisterModal } from "./LoginRegisterModal";
@@ -40,6 +41,14 @@ export function Header({ navigate }: HeaderProps) {
   const shortAddr = connectedAddress
     ? `${connectedAddress.slice(0, 6)}...${connectedAddress.slice(-4)}`
     : null;
+
+  // Register global callback for PlanCards "Register for free" button
+  useEffect(() => {
+    setRegisterCallback(() => {
+      setAuthTab("register");
+      setAuthModalOpen(true);
+    });
+  }, []);
 
   const openLogin = () => {
     setAuthTab("login");
