@@ -17,18 +17,16 @@ export type Genre =
   | "Standart"
   | "Electronic"
   | "Pop"
-  | "Rap"
+  | "Hip-Hop"
   | "Rock"
-  | "EDM"
   | "Oriental/Asian";
 
 export const GENRES: Genre[] = [
   "Standart",
   "Electronic",
   "Pop",
-  "Rap",
+  "Hip-Hop",
   "Rock",
-  "EDM",
   "Oriental/Asian",
 ];
 
@@ -47,14 +45,11 @@ export const PLAYLIST: Record<Genre, string[]> = {
   Pop: [
     // Add Pop genre MP3 filenames here
   ],
-  Rap: [
+  "Hip-Hop": [
     "/assets/uploads/dream_of_big_cream-019d3a42-818e-70ca-97e4-ee1a311fe5ff-1.mp3",
   ],
   Rock: [
     // Add Rock genre MP3 filenames here
-  ],
-  EDM: [
-    // Add EDM genre MP3 filenames here
   ],
   "Oriental/Asian": [
     // Add Oriental/Asian genre MP3 files to: public/music/Oriental-Asian/
@@ -67,7 +62,12 @@ export function getTrackUrl(genre: Genre, filename: string): string {
   if (filename.startsWith("/")) {
     return filename;
   }
-  const folderName = genre === "Oriental/Asian" ? "Oriental-Asian" : genre;
+  const folderName =
+    genre === "Oriental/Asian"
+      ? "Oriental-Asian"
+      : genre === "Hip-Hop"
+        ? "Hip-Hop"
+        : genre;
   return `/music/${folderName}/${filename}`;
 }
 

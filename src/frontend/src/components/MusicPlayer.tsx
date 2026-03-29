@@ -70,15 +70,18 @@ export function MusicPlayer() {
           </button>
         </div>
 
-        {/* Genre selector */}
-        <div className="flex items-center gap-1 mb-2 flex-wrap">
-          <span className={`text-xs ${muted}`}>Genre:</span>
+        {/* Genre selector – single scrollable row */}
+        <div
+          className="flex items-center gap-1 mb-2 overflow-x-auto"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <span className={`text-xs ${muted} flex-shrink-0`}>Genre:</span>
           {GENRES.map((g) => (
             <button
               key={g}
               type="button"
               onClick={() => setGenre(g)}
-              className={`text-xs px-1.5 py-0.5 rounded-full transition-colors ${
+              className={`text-xs px-1.5 py-0.5 rounded-full transition-colors flex-shrink-0 ${
                 currentGenre === g ? genreActive : genreInactive
               }`}
             >
