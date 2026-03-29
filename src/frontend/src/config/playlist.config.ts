@@ -13,7 +13,14 @@
 // to reference files stored in other locations.
 // ============================================================
 
-export type Genre = "Standart" | "Electronic" | "Pop" | "Rap" | "Rock" | "EDM";
+export type Genre =
+  | "Standart"
+  | "Electronic"
+  | "Pop"
+  | "Rap"
+  | "Rock"
+  | "EDM"
+  | "Oriental/Asian";
 
 export const GENRES: Genre[] = [
   "Standart",
@@ -22,14 +29,16 @@ export const GENRES: Genre[] = [
   "Rap",
   "Rock",
   "EDM",
+  "Oriental/Asian",
 ];
 
 // List your MP3 filenames here for each genre.
 // Example: "my-track.mp3"
 export const PLAYLIST: Record<Genre, string[]> = {
   Standart: [
-    // Add your default/ambient MP3 filenames here
-    // Example: "creamy-intro.mp3",
+    "/assets/uploads/cream_the_queen-019d3a28-1d42-739b-baa4-718782f86895-1.mp3",
+    "/assets/uploads/never_stop_creaming-019d3a28-5dff-730a-8ebf-911b509aa395-2.mp3",
+    "/assets/uploads/dream_of_big_cream-019d3a42-818e-70ca-97e4-ee1a311fe5ff-1.mp3",
   ],
   Electronic: [
     "/assets/uploads/cream_the_queen-019d3a28-1d42-739b-baa4-718782f86895-1.mp3",
@@ -39,13 +48,16 @@ export const PLAYLIST: Record<Genre, string[]> = {
     // Add Pop genre MP3 filenames here
   ],
   Rap: [
-    // Add Rap genre MP3 filenames here
+    "/assets/uploads/dream_of_big_cream-019d3a42-818e-70ca-97e4-ee1a311fe5ff-1.mp3",
   ],
   Rock: [
     // Add Rock genre MP3 filenames here
   ],
   EDM: [
     // Add EDM genre MP3 filenames here
+  ],
+  "Oriental/Asian": [
+    // Add Oriental/Asian genre MP3 files to: public/music/Oriental-Asian/
   ],
 };
 
@@ -55,10 +67,11 @@ export function getTrackUrl(genre: Genre, filename: string): string {
   if (filename.startsWith("/")) {
     return filename;
   }
-  return `/music/${genre}/${filename}`;
+  const folderName = genre === "Oriental/Asian" ? "Oriental-Asian" : genre;
+  return `/music/${folderName}/${filename}`;
 }
 
-// Returns display name from filename (strips .mp3 extension and path)
+// Returns display name from filename (strips .mp3 extension, path, and UUID suffixes)
 export function getTrackName(filename: string): string {
   const base = filename.split("/").pop() ?? filename;
   return (

@@ -7,7 +7,12 @@ import {
   useRef,
   useState,
 } from "react";
-import { type Genre, PLAYLIST, getTrackUrl } from "../config/playlist.config";
+import {
+  type Genre,
+  PLAYLIST,
+  getTrackName,
+  getTrackUrl,
+} from "../config/playlist.config";
 
 export const PLAYER_TOGGLE_EVENT = "cryptai:togglePlayer";
 
@@ -47,9 +52,7 @@ export function MusicPlayerProvider({
 
   const playlist = PLAYLIST[currentGenre];
   const currentFilename = playlist[currentIndex] ?? "";
-  const currentTrackName = currentFilename
-    ? currentFilename.replace(/\.mp3$/i, "").replace(/[-_]/g, " ")
-    : "";
+  const currentTrackName = currentFilename ? getTrackName(currentFilename) : "";
 
   // Init audio element once
   useEffect(() => {
@@ -146,22 +149,20 @@ export function MusicPlayerProvider({
     setCurrentGenre(g);
     setCurrentIndex(0);
     setIsPlaying(false);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = "";
-    }
     const newList = PLAYLIST[g];
     if (newList.length > 0) {
-      setTimeout(() => {
-        const audio = audioRef.current;
-        if (!audio) return;
-        audio.src = getTrackUrl(g, newList[0]);
-        audio.volume = volumeRef.current;
-        audio
-          .play()
-          .then(() => setIsPlaying(true))
-          .catch(() => {});
-      }, 50);
+      const audio = audioRef.current;
+      if (!audio) return;
+      audio.pause();
+      audio.src = getTrackUrl(g, newList[0]);
+      audio.volume = volumeRef.current;
+      audio
+        .play()
+        .then(() => setIsPlaying(true))
+        .catch(() => {});
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
     }
   }, []);
 
@@ -173,14 +174,19 @@ export function MusicPlayerProvider({
     if (list.length > 0 && !isPlayingRef.current) {
       const audio = audioRef.current;
       if (!audio) return;
+      // Directly set src and play without relying on useEffect to avoid race conditions
       setCurrentGenre("Standart");
+      currentGenreRef.current = "Standart";
       setCurrentIndex(0);
       audio.src = getTrackUrl("Standart", list[0]);
       audio.volume = 0.1;
       setVolumeState(0.1);
       audio
         .play()
-        .then(() => setIsPlaying(true))
+        .then(() => {
+          setIsPlaying(true);
+          isPlayingRef.current = true;
+        })
         .catch(() => {});
     }
   }, []);

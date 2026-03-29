@@ -23,7 +23,7 @@ import { HomePage } from "./pages/HomePage";
 import { PlaceholderPage } from "./pages/PlaceholderPage";
 
 const PAGE_NAMES: Record<string, string> = {
-  "/page-1": "About CryptoAI.org",
+  "/page-1": "About CreamyCryptoAI.org",
   "/page-2": "AI Tools",
   "/page-3": "Market Analysis",
   "/page-4": "Trading Signals",

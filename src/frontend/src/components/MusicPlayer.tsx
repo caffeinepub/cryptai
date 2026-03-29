@@ -48,112 +48,109 @@ export function MusicPlayer() {
 
   return (
     <div
-      className={`w-full border-b ${bg} ${text} px-4 py-3 transition-all duration-300`}
+      className={`w-full border-b ${bg} ${text} transition-all duration-300`}
       style={{ zIndex: 29 }}
     >
-      {/* Header row */}
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <Music size={14} className={muted} />
-          <span className="text-xs font-bold tracking-wide uppercase opacity-60">
-            Creamy Vibes
-          </span>
-        </div>
-        <button
-          type="button"
-          onClick={toggleOpen}
-          className={`p-1 rounded ${btnHover} ${muted} transition-colors`}
-          aria-label="Collapse player"
-        >
-          <ChevronUp size={16} />
-        </button>
-      </div>
-
-      {/* Genre selector */}
-      <div className="flex items-center gap-1 mb-3 flex-wrap">
-        <span className={`text-xs ${muted} mr-1`}>Genre:</span>
-        {GENRES.map((g) => (
+      <div className="max-w-sm px-3 py-2">
+        {/* Header row */}
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-1.5">
+            <Music size={12} className={muted} />
+            <span className="text-xs font-bold tracking-wide uppercase opacity-60">
+              Creamy Vibes
+            </span>
+          </div>
           <button
-            key={g}
             type="button"
-            onClick={() => setGenre(g)}
-            className={`text-xs px-2 py-0.5 rounded-full transition-colors ${
-              currentGenre === g ? genreActive : genreInactive
-            }`}
+            onClick={toggleOpen}
+            className={`p-0.5 rounded ${btnHover} ${muted} transition-colors`}
+            aria-label="Collapse player"
           >
-            {g === "Standart" ? "Default" : g}
+            <ChevronUp size={14} />
           </button>
-        ))}
-      </div>
-
-      {/* Track name + controls */}
-      <div className="flex items-center gap-3">
-        {/* Prev */}
-        <button
-          type="button"
-          onClick={prev}
-          disabled={playlist.length === 0}
-          className={`p-1.5 rounded-full ${btnHover} transition-colors disabled:opacity-30`}
-          aria-label="Previous"
-        >
-          <SkipBack size={16} />
-        </button>
-
-        {/* Play/Pause */}
-        <button
-          type="button"
-          onClick={togglePlay}
-          disabled={playlist.length === 0}
-          className={`p-2 rounded-full ${
-            isDark
-              ? "bg-zinc-700 hover:bg-zinc-600"
-              : "bg-zinc-200 hover:bg-zinc-300"
-          } transition-colors disabled:opacity-30`}
-          aria-label={isPlaying ? "Pause" : "Play"}
-        >
-          {isPlaying ? <Pause size={16} /> : <Play size={16} />}
-        </button>
-
-        {/* Next */}
-        <button
-          type="button"
-          onClick={next}
-          disabled={playlist.length === 0}
-          className={`p-1.5 rounded-full ${btnHover} transition-colors disabled:opacity-30`}
-          aria-label="Next"
-        >
-          <SkipForward size={16} />
-        </button>
-
-        {/* Song name */}
-        <div className="flex-1 min-w-0">
-          {playlist.length === 0 ? (
-            <span className={`text-xs ${muted} italic`}>
-              No tracks in this genre
-            </span>
-          ) : (
-            <span className="text-sm font-medium truncate block">
-              {currentTrackName || "Unknown Track"}
-            </span>
-          )}
         </div>
 
-        {/* Volume */}
-        <div className="flex items-center gap-1.5 flex-shrink-0">
-          <Volume2 size={13} className={muted} />
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={volume}
-            onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
-            className="w-20 accent-current cursor-pointer"
-            aria-label="Volume"
-          />
-          <span className={`text-xs ${muted} w-7 text-right`}>
-            {Math.round(volume * 100)}%
-          </span>
+        {/* Genre selector */}
+        <div className="flex items-center gap-1 mb-2 flex-wrap">
+          <span className={`text-xs ${muted}`}>Genre:</span>
+          {GENRES.map((g) => (
+            <button
+              key={g}
+              type="button"
+              onClick={() => setGenre(g)}
+              className={`text-xs px-1.5 py-0.5 rounded-full transition-colors ${
+                currentGenre === g ? genreActive : genreInactive
+              }`}
+            >
+              {g === "Standart" ? "All" : g}
+            </button>
+          ))}
+        </div>
+
+        {/* Controls row */}
+        <div className="flex items-center gap-1.5">
+          {/* Prev */}
+          <button
+            type="button"
+            onClick={prev}
+            disabled={playlist.length === 0}
+            className={`p-1 rounded-full ${btnHover} transition-colors disabled:opacity-30 flex-shrink-0`}
+            aria-label="Previous"
+          >
+            <SkipBack size={14} />
+          </button>
+
+          {/* Play/Pause */}
+          <button
+            type="button"
+            onClick={togglePlay}
+            disabled={playlist.length === 0}
+            className={`p-1.5 rounded-full ${
+              isDark
+                ? "bg-zinc-700 hover:bg-zinc-600"
+                : "bg-zinc-200 hover:bg-zinc-300"
+            } transition-colors disabled:opacity-30 flex-shrink-0`}
+            aria-label={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? <Pause size={14} /> : <Play size={14} />}
+          </button>
+
+          {/* Next */}
+          <button
+            type="button"
+            onClick={next}
+            disabled={playlist.length === 0}
+            className={`p-1 rounded-full ${btnHover} transition-colors disabled:opacity-30 flex-shrink-0`}
+            aria-label="Next"
+          >
+            <SkipForward size={14} />
+          </button>
+
+          {/* Song name */}
+          <div className="flex-1 min-w-0 mx-1">
+            {playlist.length === 0 ? (
+              <span className={`text-xs ${muted} italic`}>No tracks</span>
+            ) : (
+              <span className="text-xs font-medium truncate block">
+                {currentTrackName || "Unknown Track"}
+              </span>
+            )}
+          </div>
+
+          {/* Volume */}
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <Volume2 size={11} className={muted} />
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              value={volume}
+              onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+              className="w-14 sm:w-16 accent-current cursor-pointer"
+              aria-label="Volume"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -176,17 +173,17 @@ export function MusicPlayerCollapsedBar() {
   return (
     <button
       type="button"
-      className={`w-full border-b ${bg} px-4 py-1.5 flex items-center gap-2 cursor-pointer text-left`}
+      className={`w-full border-b ${bg} px-3 py-1 flex items-center gap-1.5 cursor-pointer text-left`}
       onClick={toggleOpen}
       aria-label="Open Creamy Vibes player"
     >
-      <Music size={12} className={muted} />
-      <span className={`text-xs ${muted}`}>
+      <Music size={11} className={muted} />
+      <span className={`text-xs ${muted} truncate`}>
         {isPlaying && currentTrackName
           ? `♪ ${currentTrackName}`
           : "Creamy Vibes"}
       </span>
-      <ChevronDown size={12} className={muted} />
+      <ChevronDown size={11} className={`${muted} flex-shrink-0`} />
     </button>
   );
 }

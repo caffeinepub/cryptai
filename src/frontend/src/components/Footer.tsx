@@ -48,8 +48,10 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="font-display font-bold text-xl mb-2">
-              <span className="text-foreground">CryptoAI</span>
-              <span className="text-primary">.org</span>
+              <span style={{ color: "#D4AF37" }}>Creamy</span>
+              <span className="text-foreground">Crypto</span>
+              <span style={{ color: "#D4AF37" }}>AI</span>
+              <span className="text-foreground">.org</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t("footer_tagline")}
@@ -128,7 +130,8 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
           <span>
-            © {year} CryptoAI.org · Future Compass Lab. All rights reserved.
+            © {year} CreamyCryptoAI.org · Future Compass Lab. All rights
+            reserved.
           </span>
           <a
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${hostname}`}
