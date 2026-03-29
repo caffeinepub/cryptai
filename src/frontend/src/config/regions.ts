@@ -255,7 +255,8 @@ export type TranslationKey =
   | "save_25"
   | "best_plan"
   | "active_badge"
-  | "researchers_community";
+  | "researchers_community"
+  | "memes_meet_research";
 
 export interface RegionLanguageConfig {
   defaultLang: Language;
@@ -407,6 +408,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "Best Plan",
     active_badge: "Active",
     researchers_community: "Researchers' Community",
+    memes_meet_research: "memes meet research",
   },
   de: {
     nav_home: "Startseite",
@@ -479,6 +481,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "Bester Plan",
     active_badge: "Aktiv",
     researchers_community: "Forscher-Community",
+    memes_meet_research: "Memes treffen Forschung",
   },
   fr: {
     nav_home: "Accueil",
@@ -552,6 +555,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "Meilleur Plan",
     active_badge: "Actif",
     researchers_community: "Communauté des Chercheurs",
+    memes_meet_research: "mèmes rencontrent la recherche",
   },
   ar: {
     nav_home: "الرئيسية",
@@ -622,6 +626,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "أفضل خطة",
     active_badge: "نشط",
     researchers_community: "مجتمع الباحثين",
+    memes_meet_research: "الميمات تلتقي بالبحث",
   },
   es: {
     nav_home: "Inicio",
@@ -694,6 +699,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "Mejor Plan",
     active_badge: "Activo",
     researchers_community: "Comunidad de Investigadores",
+    memes_meet_research: "memes se encuentran con la investigación",
   },
   tr: {
     nav_home: "Ana Sayfa",
@@ -765,6 +771,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "En İyi Plan",
     active_badge: "Aktif",
     researchers_community: "Araştırmacılar Topluluğu",
+    memes_meet_research: "memler araştırmayla buluşuyor",
   },
   fa: {
     nav_home: "خانه",
@@ -835,6 +842,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     best_plan: "بهترین پلن",
     active_badge: "فعال",
     researchers_community: "جامعه پژوهشگران",
+    memes_meet_research: "میم‌ها با تحقیق ملاقات می‌کنند",
   },
 };
 
@@ -910,4 +918,5 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   best_plan: "Melhor Plano",
   active_badge: "Ativo",
   researchers_community: "Comunidade de Pesquisadores",
+  memes_meet_research: "memes encontram a pesquisa",
 };

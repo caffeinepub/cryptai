@@ -79,11 +79,17 @@ export function Header({ navigate }: HeaderProps) {
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="flex items-center gap-1 font-display font-bold text-xl tracking-tight"
+              className="flex flex-col items-start gap-0.5 font-display font-bold tracking-tight"
               data-ocid="nav.home.link"
             >
-              <span className="text-foreground">
+              <span className="text-foreground text-xl">
                 {t("researchers_community")}
+              </span>
+              <span
+                className="text-muted-foreground font-normal"
+                style={{ fontSize: "0.6em" }}
+              >
+                {t("memes_meet_research")}
               </span>
             </button>
             {/* Logo: header only triggers animation, no website opens */}
