@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const MENU_PAGES = [
-  { label: "About Cryptoai.org", path: "/page-1" },
+  { label: "About CryptoAI.org", path: "/page-1" },
   { label: "AI Tools", path: "/page-2" },
   { label: "Market Analysis", path: "/page-3" },
   { label: "Trading Signals", path: "/page-4" },
@@ -53,7 +53,7 @@ export function HamburgerMenu({
       >
         <div className="flex items-center justify-between p-5 border-b border-zinc-800">
           <span className="font-bold text-lg text-white">
-            Cryptoai<span className="text-primary">.org</span>
+            CryptoAI<span className="text-primary">.org</span>
           </span>
           <button
             type="button"
