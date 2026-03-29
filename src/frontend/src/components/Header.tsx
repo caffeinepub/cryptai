@@ -9,6 +9,7 @@ import { useState } from "react";
 import { SOCIAL_LINKS } from "../config/app.config";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
+import { triggerPlayerOpen } from "../contexts/MusicPlayerContext";
 import { useReadingTimer } from "../contexts/ReadingTimerContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useWallet } from "../contexts/WalletContext";
@@ -54,9 +55,10 @@ export function Header({ navigate }: HeaderProps) {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  // Header logo: only triggers animation, does NOT open any website
+  // Header logo: triggers animation + opens music player
   const handleLogoClick = () => {
     triggerSticker();
+    triggerPlayerOpen();
   };
 
   return (
@@ -92,13 +94,13 @@ export function Header({ navigate }: HeaderProps) {
                 {t("memes_meet_research")}
               </span>
             </button>
-            {/* Logo: header only triggers animation, no website opens */}
+            {/* Logo/Mustache: triggers animation + opens music player */}
             <button
               type="button"
               onClick={handleLogoClick}
               className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
-              aria-label="cREAMY cOMMUNITY"
-              title="cREAMY cOMMUNITY"
+              aria-label="cREAMY cOMMUNITY – Open Creamy Vibes Player"
+              title="Open Creamy Vibes Player"
             >
               <img
                 src="/assets/uploads/e6149769-dde7-4cf9-a544-1cede158fbd1-019d3653-1931-72e3-9b25-c3751a055916-1.png"

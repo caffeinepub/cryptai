@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { LoginRegisterModal } from "./components/LoginRegisterModal";
+import { MusicPlayer, MusicPlayerCollapsedBar } from "./components/MusicPlayer";
 import { RegisterPrompt } from "./components/RegisterPrompt";
 import { StickerOverlay } from "./components/StickerOverlay";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { MembershipProvider } from "./contexts/MembershipContext";
+import { MusicPlayerProvider } from "./contexts/MusicPlayerContext";
 import {
   ReadingTimerProvider,
   useReadingTimer,
@@ -78,6 +80,9 @@ function AppContent() {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
       <Header navigate={navigate} />
+      {/* Music player — persists across route changes, appears directly below header */}
+      <MusicPlayer />
+      <MusicPlayerCollapsedBar />
       <div className="flex-1">{renderPage()}</div>
       <Footer />
       <Toaster />
@@ -113,7 +118,9 @@ export default function App() {
           <ReadingTimerProvider>
             <WalletProvider>
               <MembershipProvider>
-                <AppContent />
+                <MusicPlayerProvider>
+                  <AppContent />
+                </MusicPlayerProvider>
               </MembershipProvider>
             </WalletProvider>
           </ReadingTimerProvider>
