@@ -16,7 +16,8 @@ const ARTICLES: Article[] = [
     category: "AI",
     gradient: "bg-gradient-to-br from-blue-900 to-indigo-900",
     topicLabels: ["AI"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
   {
     id: "f2",
@@ -28,7 +29,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-orange-900 to-yellow-900",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
-    typeLabel: "Tabelle",
+    typeLabel: "Table",
+    arabic_only: false,
   },
   {
     id: "f3",
@@ -41,6 +43,7 @@ const ARTICLES: Article[] = [
     gradient: "bg-gradient-to-br from-purple-900 to-pink-900",
     topicLabels: ["Crypto projects"],
     typeLabel: "Video",
+    arabic_only: false,
   },
   {
     id: "f4",
@@ -52,7 +55,8 @@ const ARTICLES: Article[] = [
     category: "AI",
     gradient: "bg-gradient-to-br from-teal-900 to-cyan-900",
     topicLabels: ["AI"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
   // Basic articles
   {
@@ -65,7 +69,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-amber-800 to-orange-800",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
   {
     id: "b2",
@@ -77,7 +82,8 @@ const ARTICLES: Article[] = [
     category: "AI",
     gradient: "bg-gradient-to-br from-blue-800 to-violet-800",
     topicLabels: ["AI"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
   {
     id: "b3",
@@ -89,7 +95,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-green-900 to-emerald-800",
     topicLabels: ["Market & microeconomy"],
-    typeLabel: "Tabelle",
+    typeLabel: "Table",
+    arabic_only: false,
   },
   {
     id: "b4",
@@ -102,6 +109,7 @@ const ARTICLES: Article[] = [
     gradient: "bg-gradient-to-br from-indigo-900 to-blue-800",
     topicLabels: ["AI"],
     typeLabel: "Video",
+    arabic_only: false,
   },
   // Premium articles
   {
@@ -114,7 +122,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-slate-700 to-gray-700",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
-    typeLabel: "Tabelle",
+    typeLabel: "Table",
+    arabic_only: false,
   },
   {
     id: "p2",
@@ -127,6 +136,7 @@ const ARTICLES: Article[] = [
     gradient: "bg-gradient-to-br from-violet-800 to-purple-900",
     topicLabels: ["AI"],
     typeLabel: "Video",
+    arabic_only: false,
   },
   {
     id: "p3",
@@ -138,7 +148,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-rose-900 to-red-800",
     topicLabels: ["Crypto projects"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
   {
     id: "p4",
@@ -150,7 +161,8 @@ const ARTICLES: Article[] = [
     category: "AI",
     gradient: "bg-gradient-to-br from-cyan-900 to-teal-800",
     topicLabels: ["AI", "Market & microeconomy"],
-    typeLabel: "Text",
+    typeLabel: "Graphic",
+    arabic_only: false,
   },
   // VIP articles
   {
@@ -163,7 +175,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-yellow-800 to-amber-700",
     topicLabels: ["Market & microeconomy", "Crypto projects"],
-    typeLabel: "Tabelle",
+    typeLabel: "Table",
+    arabic_only: false,
   },
   {
     id: "v2",
@@ -175,7 +188,8 @@ const ARTICLES: Article[] = [
     category: "AI",
     gradient: "bg-gradient-to-br from-yellow-700 to-amber-700",
     topicLabels: ["AI", "Market & microeconomy"],
-    typeLabel: "Text",
+    typeLabel: "Graphic",
+    arabic_only: false,
   },
   {
     id: "v3",
@@ -188,6 +202,7 @@ const ARTICLES: Article[] = [
     gradient: "bg-gradient-to-br from-amber-900 to-orange-800",
     topicLabels: ["AI"],
     typeLabel: "Video",
+    arabic_only: false,
   },
   {
     id: "v4",
@@ -199,7 +214,8 @@ const ARTICLES: Article[] = [
     category: "Crypto",
     gradient: "bg-gradient-to-br from-yellow-900 to-amber-800",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
-    typeLabel: "Text",
+    typeLabel: "Article",
+    arabic_only: false,
   },
 ];
 
@@ -218,6 +234,9 @@ export function ArticlesSection() {
   const filtered = (level: Article["accessLevel"]) =>
     sortByDate(
       ARTICLES.filter((a) => {
+        // arabic_only articles are only shown in Arab regions
+        if (a.arabic_only && !isArabicRegion) return false;
+        // legacy isArabicOriginal support
         if (a.isArabicOriginal && !isArabicRegion) return false;
         return a.accessLevel === level;
       }),
@@ -267,6 +286,44 @@ export function ArticlesSection() {
     return false;
   };
 
+  /**
+   * Get display title/summary for an article.
+   * Rules:
+   * - arabic_only articles: always use Arabic ('ar') translation
+   * - all other articles: use currentLanguage translation, with fallback to English ('en')
+   *   NEVER fall back to Arabic for non-arabic_only articles
+   */
+  const getDisplayText = (
+    article: Article,
+  ): { title: string; summary: string } => {
+    const translations = ARTICLE_TRANSLATIONS[article.id];
+    if (!translations) {
+      return { title: article.title, summary: article.summary };
+    }
+
+    if (article.arabic_only) {
+      // Arabic-only content: always show the Arabic version
+      const arTrans = translations.ar;
+      return {
+        title: arTrans?.title || article.title,
+        summary: arTrans?.summary || article.summary,
+      };
+    }
+
+    // For all other articles: use currentLanguage, fall back to English (never Arabic)
+    const langTrans = translations[currentLanguage];
+    const enTrans = translations.en;
+
+    // If current language is Arabic but article is not arabic_only, use English
+    const preferredTrans =
+      currentLanguage === "ar" ? enTrans : (langTrans ?? enTrans);
+
+    return {
+      title: preferredTrans?.title || enTrans?.title || article.title,
+      summary: preferredTrans?.summary || enTrans?.summary || article.summary,
+    };
+  };
+
   let basicCounter = 0;
 
   return (
@@ -285,12 +342,8 @@ export function ArticlesSection() {
             basicCounter++;
           }
           const access = getAccess(article, indexInLevel);
-          // Get translated title/summary
-          const trans =
-            ARTICLE_TRANSLATIONS[article.id]?.[currentLanguage] ||
-            ARTICLE_TRANSLATIONS[article.id]?.en;
-          const displayTitle = trans?.title || article.title;
-          const displaySummary = trans?.summary || article.summary;
+          const { title: displayTitle, summary: displaySummary } =
+            getDisplayText(article);
           return (
             <div key={article.id} data-ocid={`articles.item.${idx + 1}`}>
               <ArticleCard

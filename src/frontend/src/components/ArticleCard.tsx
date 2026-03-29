@@ -3,7 +3,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 export type AccessLevel = "free" | "basic" | "premium" | "vip";
 export type TopicLabel = "Crypto projects" | "Market & microeconomy" | "AI";
-export type TypeLabel = "Video" | "Text" | "Tabelle";
+export type TypeLabel = "Video" | "Article" | "Table" | "Graphic" | "Text";
 
 export interface Article {
   id: string;
@@ -14,6 +14,7 @@ export interface Article {
   category: "AI" | "Crypto" | "General";
   gradient: string;
   isArabicOriginal?: boolean;
+  arabic_only?: boolean;
   topicLabels: TopicLabel[];
   typeLabel: TypeLabel;
 }
@@ -80,6 +81,21 @@ export function ArticleCard({
           </span>
         </div>
 
+        {/* Labels: always visible, even when access is not granted — motivates login/upgrade */}
+        <div className="mb-3 flex flex-wrap items-center gap-1.5">
+          {article.topicLabels.map((label) => (
+            <span
+              key={label}
+              className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium"
+            >
+              {label}
+            </span>
+          ))}
+          <span className="px-1.5 py-0.5 rounded bg-muted text-muted-foreground text-xs font-medium border border-border">
+            {article.typeLabel}
+          </span>
+        </div>
+
         <h3
           className={`font-semibold text-base mb-2 line-clamp-2 transition-colors group-hover:text-primary ${
             isAccessGranted ? "text-foreground" : "text-muted-foreground"
@@ -106,18 +122,6 @@ export function ArticleCard({
         <div className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
           <Calendar size={12} />
           <span>{article.publishDate}</span>
-          <span className="text-border">·</span>
-          {article.topicLabels.map((label) => (
-            <span
-              key={label}
-              className="px-1.5 py-0.5 rounded bg-primary/10 text-primary font-medium"
-            >
-              {label}
-            </span>
-          ))}
-          <span className="px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium border border-border">
-            {article.typeLabel}
-          </span>
         </div>
       </div>
     </article>
