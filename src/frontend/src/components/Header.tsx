@@ -87,7 +87,7 @@ export function Header({ navigate }: HeaderProps) {
               </span>
               <span
                 className="text-muted-foreground font-normal"
-                style={{ fontSize: "0.6em" }}
+                style={{ fontSize: "0.9em" }}
               >
                 {t("memes_meet_research")}
               </span>
