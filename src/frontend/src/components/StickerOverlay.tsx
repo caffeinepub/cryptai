@@ -25,12 +25,12 @@ export function StickerOverlay() {
     setFrame(0);
     setVisible(true);
 
-    // Sticker 1: 0–300ms, Sticker 2: 300–600ms, Sticker 3: 600–1600ms, then hide
-    const t1 = setTimeout(() => setFrame(1), 300);
-    const t2 = setTimeout(() => setFrame(2), 600);
+    // Sticker 1: 0–150ms, Sticker 2: 150–300ms, Sticker 3: 300–1300ms, then hide
+    const t1 = setTimeout(() => setFrame(1), 150);
+    const t2 = setTimeout(() => setFrame(2), 300);
     const t3 = setTimeout(() => {
       setVisible(false);
-    }, 1600);
+    }, 1300);
 
     timeoutsRef.current = [t1, t2, t3];
   }, [clearAll]);
@@ -60,7 +60,7 @@ export function StickerOverlay() {
           className="absolute w-[70vmin] h-[70vmin] object-contain"
           style={{
             opacity: frame === i ? 1 : 0,
-            transition: "opacity 0.1s ease",
+            transition: "opacity 0.08s ease",
           }}
         />
       ))}
