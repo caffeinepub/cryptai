@@ -1,5 +1,6 @@
 import { Calendar, Lock } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { useTheme } from "../contexts/ThemeContext";
 
 export type AccessLevel = "free" | "basic" | "premium" | "vip";
 export type TopicLabel = "Crypto projects" | "Market & microeconomy" | "AI";
@@ -33,6 +34,20 @@ const LEVEL_LABELS: Record<AccessLevel, string> = {
   vip: "Creamy",
 };
 
+const PLAN_COLORS: Record<
+  AccessLevel,
+  { border: string; shadow: string; bg: string }
+> = {
+  free: { border: "#4ade80", shadow: "rgba(74,222,128,0.45)", bg: "#4ade80" },
+  basic: { border: "#b87333", shadow: "rgba(184,115,51,0.45)", bg: "#b87333" },
+  premium: {
+    border: "#94a3b8",
+    shadow: "rgba(148,163,184,0.45)",
+    bg: "#94a3b8",
+  },
+  vip: { border: "#D4AF37", shadow: "rgba(212,175,55,0.45)", bg: "#D4AF37" },
+};
+
 interface ArticleCardProps {
   article: Article;
   isAccessGranted: boolean;
@@ -47,23 +62,59 @@ export function ArticleCard({
   displaySummary,
 }: ArticleCardProps) {
   const { t } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
   const title = displayTitle || article.title;
   const summary = displaySummary || article.summary;
+  const colors = PLAN_COLORS[article.accessLevel];
+
+  const cardBg = isDark ? "#18181b" : "#ffffff";
+  const defaultBorder = isDark ? "rgba(63,63,70,0.5)" : "rgba(228,228,231,0.8)";
+  const titleColor = isDark ? "#ffffff" : "#18181b";
+  const mutedColor = isDark ? "#a1a1aa" : "#71717a";
+  const chipBg = isDark ? "#27272a" : "#f4f4f5";
 
   return (
-    <article className="group rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/30 transition-all duration-300">
-      {/* Thumbnail */}
+    <article
+      className="group rounded-2xl overflow-hidden transition-all duration-300"
+      style={{
+        backgroundColor: cardBg,
+        border: `1px solid ${defaultBorder}`,
+      }}
+      onMouseEnter={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.border = `1px solid ${colors.border}`;
+        el.style.boxShadow = `0 0 0 1px ${colors.border}, 0 4px 24px ${colors.shadow}`;
+      }}
+      onMouseLeave={(e) => {
+        const el = e.currentTarget as HTMLElement;
+        el.style.border = `1px solid ${defaultBorder}`;
+        el.style.boxShadow = "none";
+      }}
+    >
+      {/* Colored top bar */}
       <div
-        className={`h-44 w-full ${article.gradient} relative overflow-hidden`}
+        style={{ backgroundColor: colors.bg, height: "38px" }}
+        className="w-full flex items-center justify-center px-3"
       >
-        {!isAccessGranted && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-            <div className="flex flex-col items-center gap-2 text-white/80">
-              <Lock size={28} />
-              <span className="text-xs font-medium">
-                {t("upgrade_to")} {LEVEL_LABELS[article.accessLevel]}
+        {!isAccessGranted ? (
+          <span className="flex items-center gap-1.5 text-white text-xs font-semibold drop-shadow">
+            <Lock size={12} />
+            {t("upgrade_to")} {LEVEL_LABELS[article.accessLevel]}
+          </span>
+        ) : (
+          <div className="flex flex-wrap items-center gap-1.5 overflow-hidden">
+            {article.topicLabels.map((label) => (
+              <span
+                key={label}
+                className="text-white/90 text-xs font-medium truncate"
+              >
+                {label}
               </span>
-            </div>
+            ))}
+            <span className="text-white/70 text-xs font-medium border border-white/30 rounded px-1">
+              {article.typeLabel}
+            </span>
           </div>
         )}
       </div>
@@ -76,30 +127,40 @@ export function ArticleCard({
           >
             {LEVEL_LABELS[article.accessLevel]}
           </span>
-          <span className="text-xs text-muted-foreground px-2 py-1 rounded-full bg-muted">
+          <span
+            className="text-xs px-2 py-1 rounded-full"
+            style={{ backgroundColor: chipBg, color: mutedColor }}
+          >
             {article.category}
           </span>
         </div>
 
-        {/* Labels: always visible, even when access is not granted — motivates login/upgrade */}
+        {/* Topic labels: always visible, even when access is not granted */}
         <div className="mb-3 flex flex-wrap items-center gap-1.5">
           {article.topicLabels.map((label) => (
             <span
               key={label}
-              className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-xs font-medium"
+              className="px-1.5 py-0.5 rounded text-xs font-medium"
+              style={{ backgroundColor: chipBg, color: mutedColor }}
             >
               {label}
             </span>
           ))}
-          <span className="px-1.5 py-0.5 rounded bg-muted text-muted-foreground text-xs font-medium border border-border">
+          <span
+            className="px-1.5 py-0.5 rounded text-xs font-medium"
+            style={{
+              backgroundColor: chipBg,
+              color: mutedColor,
+              border: `1px solid ${defaultBorder}`,
+            }}
+          >
             {article.typeLabel}
           </span>
         </div>
 
         <h3
-          className={`font-semibold text-base mb-2 line-clamp-2 transition-colors group-hover:text-primary ${
-            isAccessGranted ? "text-foreground" : "text-muted-foreground"
-          }`}
+          className="font-semibold text-base mb-2 line-clamp-2 transition-colors"
+          style={{ color: isAccessGranted ? titleColor : mutedColor }}
         >
           {isAccessGranted ? (
             title
@@ -109,17 +170,26 @@ export function ArticleCard({
         </h3>
 
         {isAccessGranted ? (
-          <p className="text-sm text-muted-foreground line-clamp-2">
+          <p className="text-sm line-clamp-2" style={{ color: mutedColor }}>
             {summary}
           </p>
         ) : (
           <div className="space-y-1.5">
-            <div className="h-3 rounded bg-muted w-full" />
-            <div className="h-3 rounded bg-muted w-4/5" />
+            <div
+              className="h-3 rounded w-full"
+              style={{ backgroundColor: chipBg }}
+            />
+            <div
+              className="h-3 rounded w-4/5"
+              style={{ backgroundColor: chipBg }}
+            />
           </div>
         )}
 
-        <div className="mt-4 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+        <div
+          className="mt-4 flex flex-wrap items-center gap-1.5 text-xs"
+          style={{ color: mutedColor }}
+        >
           <Calendar size={12} />
           <span>{article.publishDate}</span>
         </div>

@@ -240,7 +240,7 @@ export function ArticlesSection() {
         if (a.isArabicOriginal && !isArabicRegion) return false;
         return a.accessLevel === level;
       }),
-    ).slice(0, 2);
+    );
 
   const freeArticles = filtered("free");
   const basicArticles = filtered("basic");
