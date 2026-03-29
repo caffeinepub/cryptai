@@ -56,6 +56,9 @@ export function Footer() {
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t("footer_tagline")}
             </p>
+            <p className="text-muted-foreground text-xs leading-relaxed mt-1 italic">
+              {t("hero_subtitle")}
+            </p>
           </div>
 
           {/* Links */}

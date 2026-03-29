@@ -19,7 +19,7 @@ export type Genre =
   | "Pop"
   | "Hip-Hop"
   | "Rock"
-  | "Oriental/Asian";
+  | "Other";
 
 export const GENRES: Genre[] = [
   "Standart",
@@ -27,7 +27,7 @@ export const GENRES: Genre[] = [
   "Pop",
   "Hip-Hop",
   "Rock",
-  "Oriental/Asian",
+  "Other",
 ];
 
 // List your MP3 filenames here for each genre.
@@ -43,16 +43,16 @@ export const PLAYLIST: Record<Genre, string[]> = {
     "/assets/uploads/never_stop_creaming-019d3a28-5dff-730a-8ebf-911b509aa395-2.mp3",
   ],
   Pop: [
-    // Add Pop genre MP3 filenames here
+    // Add Pop genre MP3 files to: public/music/Pop/
   ],
   "Hip-Hop": [
     "/assets/uploads/dream_of_big_cream-019d3a42-818e-70ca-97e4-ee1a311fe5ff-1.mp3",
   ],
   Rock: [
-    // Add Rock genre MP3 filenames here
+    // Add Rock genre MP3 files to: public/music/Rock/
   ],
-  "Oriental/Asian": [
-    // Add Oriental/Asian genre MP3 files to: public/music/Oriental-Asian/
+  Other: [
+    // Add Other genre MP3 files to: public/music/Other/
   ],
 };
 
@@ -62,12 +62,7 @@ export function getTrackUrl(genre: Genre, filename: string): string {
   if (filename.startsWith("/")) {
     return filename;
   }
-  const folderName =
-    genre === "Oriental/Asian"
-      ? "Oriental-Asian"
-      : genre === "Hip-Hop"
-        ? "Hip-Hop"
-        : genre;
+  const folderName = genre === "Hip-Hop" ? "Hip-Hop" : genre;
   return `/music/${folderName}/${filename}`;
 }
 

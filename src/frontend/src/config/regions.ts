@@ -103,7 +103,7 @@ export const FRENCH_COUNTRIES = ["FR", "BE", "LU", "MC"];
 export const PORTUGUESE_COUNTRIES = ["BR", "PT", "AO", "MZ"];
 
 // German-speaking countries
-export const GERMAN_COUNTRIES = ["DE", "AT"];
+export const GERMAN_COUNTRIES = ["DE", "AT", "LI"];
 
 // Asian countries (English default)
 export const ASIAN_ENGLISH = [
@@ -256,7 +256,12 @@ export type TranslationKey =
   | "best_plan"
   | "active_badge"
   | "researchers_community"
-  | "memes_meet_research";
+  | "memes_meet_research"
+  | "smarter_research"
+  | "hero_subtitle"
+  | "download_register"
+  | "download_limit_reached"
+  | "download_unlimited";
 
 export interface RegionLanguageConfig {
   defaultLang: Language;
@@ -272,10 +277,10 @@ export function getRegionLanguageConfig(
 
   // Arabic regions
   if (NORTH_AFRICA_ARABIC.includes(countryCode)) {
-    return { defaultLang: "ar", availableOptions: mk(["ar", "fr", "en"]) };
+    return { defaultLang: "fr", availableOptions: mk(["fr", "ar", "en"]) };
   }
   if (EAST_GULF_ARABIC.includes(countryCode)) {
-    return { defaultLang: "ar", availableOptions: mk(["ar", "en"]) };
+    return { defaultLang: "en", availableOptions: mk(["en", "ar"]) };
   }
 
   // Turkey
@@ -314,12 +319,12 @@ export function getRegionLanguageConfig(
 
   // Native English (US, UK, AU, CA)
   if (NATIVE_ENGLISH.includes(countryCode)) {
-    return { defaultLang: "en", availableOptions: mk(["en", "es"]) };
+    return { defaultLang: "en", availableOptions: mk(["en", "es", "fr"]) };
   }
 
   // African English countries
   if (ENGLISH_AFRICA.includes(countryCode)) {
-    return { defaultLang: "en", availableOptions: mk(["en"]) };
+    return { defaultLang: "en", availableOptions: mk(["en", "fr"]) };
   }
 
   // African French countries
@@ -327,13 +332,23 @@ export function getRegionLanguageConfig(
     return { defaultLang: "fr", availableOptions: mk(["fr", "en"]) };
   }
 
+  // China
+  if (countryCode === "CN") {
+    return { defaultLang: "en", availableOptions: mk(["en", "zh"]) };
+  }
+
+  // Japan
+  if (countryCode === "JP") {
+    return { defaultLang: "en", availableOptions: mk(["en", "ja"]) };
+  }
+
   // Asian countries (English)
   if (ASIAN_ENGLISH.includes(countryCode)) {
     return { defaultLang: "en", availableOptions: mk(["en"]) };
   }
 
-  // Default: English only
-  return { defaultLang: "en", availableOptions: mk(["en"]) };
+  // Default: English + Spanish + French
+  return { defaultLang: "en", availableOptions: mk(["en", "es", "fr"]) };
 }
 
 export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
@@ -409,6 +424,12 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "Active",
     researchers_community: "Researchers' Community",
     memes_meet_research: "memes meet research",
+    smarter_research: "Smarter research, powered by memetic vibes",
+    hero_subtitle:
+      "Master crypto research, leverage AI-driven insights, and invest smarter. Your edge in the market starts here.",
+    download_register: "Register to download",
+    download_limit_reached: "Get Basic for more downloads",
+    download_unlimited: "Unlimited downloads",
   },
   de: {
     nav_home: "Startseite",
@@ -482,6 +503,12 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "Aktiv",
     researchers_community: "Forscher-Community",
     memes_meet_research: "Memes treffen Forschung",
+    smarter_research: "Klügere Recherche, befeuert von memetischen Vibes",
+    hero_subtitle:
+      "Meistere Krypto-Research, nutze KI-gestützte Analysen und investiere klüger. Dein Vorteil im Markt beginnt hier.",
+    download_register: "Registrieren zum Herunterladen",
+    download_limit_reached: "Basic holen für mehr Downloads",
+    download_unlimited: "Unbegrenzte Downloads",
   },
   fr: {
     nav_home: "Accueil",
@@ -556,6 +583,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "Actif",
     researchers_community: "Communauté des Chercheurs",
     memes_meet_research: "mèmes rencontrent la recherche",
+    smarter_research:
+      "Recherche plus intelligente, propulsée par des vibes mémétiques",
+    hero_subtitle:
+      "Maîtrisez la recherche crypto, exploitez les analyses IA et investissez plus intelligemment. Votre avantage commence ici.",
+    download_register: "Inscrivez-vous pour télécharger",
+    download_limit_reached: "Obtenez Basic pour plus de téléchargements",
+    download_unlimited: "Téléchargements illimités",
   },
   ar: {
     nav_home: "الرئيسية",
@@ -627,6 +661,12 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "نشط",
     researchers_community: "مجتمع الباحثين",
     memes_meet_research: "الميمات تلتقي بالبحث",
+    smarter_research: "بحث أذكى، مدفوع بالطاقة الميمية",
+    hero_subtitle:
+      "أتقن أبحاث العملات المشفرة، استفد من تحليلات الذكاء الاصطناعي، واستثمر بذكاء. ميزتك في السوق تبدأ هنا.",
+    download_register: "سجّل للتنزيل",
+    download_limit_reached: "احصل على Basic لمزيد من التنزيلات",
+    download_unlimited: "تنزيلات غير محدودة",
   },
   es: {
     nav_home: "Inicio",
@@ -700,6 +740,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "Activo",
     researchers_community: "Comunidad de Investigadores",
     memes_meet_research: "memes se encuentran con la investigación",
+    smarter_research:
+      "Investigación más inteligente, impulsada por el vibrante memético",
+    hero_subtitle:
+      "Domina la investigación cripto, aprovecha los análisis con IA e invierte con inteligencia. Tu ventaja en el mercado empieza aquí.",
+    download_register: "Regístrate para descargar",
+    download_limit_reached: "Obtén Basic para más descargas",
+    download_unlimited: "Descargas ilimitadas",
   },
   tr: {
     nav_home: "Ana Sayfa",
@@ -772,6 +819,13 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "Aktif",
     researchers_community: "Araştırmacılar Topluluğu",
     memes_meet_research: "memler araştırmayla buluşuyor",
+    smarter_research:
+      "Memetik titreşimlerle güçlendirilmiş daha akıllı araştırma",
+    hero_subtitle:
+      "Kripto araştırmada ustalaş, yapay zeka destekli analizlerden yararlan ve daha akıllıca yatırım yap. Piyasadaki avantajın burada başlıyor.",
+    download_register: "İndirmek için kayıt ol",
+    download_limit_reached: "Daha fazla indirme için Basic al",
+    download_unlimited: "Sınırsız indirme",
   },
   fa: {
     nav_home: "خانه",
@@ -843,6 +897,12 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     active_badge: "فعال",
     researchers_community: "جامعه پژوهشگران",
     memes_meet_research: "میم‌ها با تحقیق ملاقات می‌کنند",
+    smarter_research: "پژوهش هوشمندتر، با انرژی میمتیک",
+    hero_subtitle:
+      "بر تحقیقات کریپتو مسلط شوید، از تحلیل‌های هوش مصنوعی بهره بگیرید و هوشمندانه‌تر سرمایه‌گذاری کنید. مزیت شما در بازار از اینجا شروع می‌شود.",
+    download_register: "برای دانلود ثبت‌نام کنید",
+    download_limit_reached: "برای دانلودهای بیشتر Basic بگیرید",
+    download_unlimited: "دانلود نامحدود",
   },
 };
 
@@ -919,4 +979,11 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   active_badge: "Ativo",
   researchers_community: "Comunidade de Pesquisadores",
   memes_meet_research: "memes encontram a pesquisa",
+  smarter_research:
+    "Pesquisa mais inteligente, impulsionada por vibrações meméticas",
+  hero_subtitle:
+    "Domine a pesquisa cripto, aproveite análises baseadas em IA e invista com mais inteligência. A sua vantagem no mercado começa aqui.",
+  download_register: "Registe-se para descarregar",
+  download_limit_reached: "Obtenha o Basic para mais downloads",
+  download_unlimited: "Downloads ilimitados",
 };

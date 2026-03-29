@@ -91,7 +91,9 @@ export function Header({ navigate }: HeaderProps) {
                 className="text-muted-foreground font-normal"
                 style={{ fontSize: "0.9em" }}
               >
-                {t("memes_meet_research")}
+                <span style={{ color: "#D4AF37" }}>
+                  {t("smarter_research")}
+                </span>
               </span>
             </button>
             {/* Logo/Mustache: triggers animation + opens music player */}
