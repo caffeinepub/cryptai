@@ -12,38 +12,38 @@ export function StickerOverlay() {
   const [visible, setVisible] = useState(false);
   const [frame, setFrame] = useState(0);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const visibleRef = useRef(false);
 
-  const handleTrigger = useCallback(() => {
-    const clearAll = () => {
-      for (const t of timeoutsRef.current) clearTimeout(t);
-      timeoutsRef.current = [];
-    };
-
-    if (visibleRef.current) {
-      clearAll();
-      visibleRef.current = false;
-      setVisible(false);
-    } else {
-      clearAll();
-      visibleRef.current = true;
-      setFrame(0);
-      setVisible(true);
-      // Bild 1: 0ms–200ms, Bild 2: 200ms–400ms, Bild 3: 400ms–1400ms (1 Sekunde)
-      const t1 = setTimeout(() => setFrame(1), 200);
-      const t2 = setTimeout(() => setFrame(2), 400);
-      const t3 = setTimeout(() => {
-        visibleRef.current = false;
-        setVisible(false);
-      }, 1400);
-      timeoutsRef.current = [t1, t2, t3];
-    }
+  const clearAll = useCallback(() => {
+    for (const t of timeoutsRef.current) clearTimeout(t);
+    timeoutsRef.current = [];
   }, []);
+
+  // Always restart the animation on trigger -- never cancel mid-run
+  const handleTrigger = useCallback(() => {
+    clearAll();
+
+    setFrame(0);
+    setVisible(true);
+
+    // Sticker 1: 0–300ms, Sticker 2: 300–600ms, Sticker 3: 600–1600ms, then hide
+    const t1 = setTimeout(() => setFrame(1), 300);
+    const t2 = setTimeout(() => setFrame(2), 600);
+    const t3 = setTimeout(() => {
+      setVisible(false);
+    }, 1600);
+
+    timeoutsRef.current = [t1, t2, t3];
+  }, [clearAll]);
 
   useEffect(() => {
     window.addEventListener(STICKER_EVENT, handleTrigger);
     return () => window.removeEventListener(STICKER_EVENT, handleTrigger);
   }, [handleTrigger]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => clearAll();
+  }, [clearAll]);
 
   if (!visible) return null;
 
@@ -59,7 +59,8 @@ export function StickerOverlay() {
           alt={`sticker-${i + 1}`}
           className="absolute w-[70vmin] h-[70vmin] object-contain"
           style={{
-            display: frame === i ? "block" : "none",
+            opacity: frame === i ? 1 : 0,
+            transition: "opacity 0.1s ease",
           }}
         />
       ))}
