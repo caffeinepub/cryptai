@@ -27,10 +27,10 @@ const BADGE_STYLES: Record<AccessLevel, string> = {
 };
 
 const LEVEL_LABELS: Record<AccessLevel, string> = {
-  free: "FREE",
-  basic: "BASIC",
-  premium: "PREMIUM",
-  vip: "VIP",
+  free: "Uncreamed",
+  basic: "Creamed",
+  premium: "Extra Creamed",
+  vip: "Creamy",
 };
 
 interface ArticleCardProps {

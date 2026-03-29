@@ -6,19 +6,19 @@ import {
 
 const ACCESS_BADGE: Record<string, { label: string; className: string }> = {
   free: {
-    label: "FREE",
+    label: "Uncreamed",
     className: "text-green-400 bg-green-400/15 border border-green-400/30",
   },
   basic: {
-    label: "BASIC",
+    label: "Creamed",
     className: "text-amber-400 bg-amber-400/15 border border-amber-400/30",
   },
   premium: {
-    label: "PREMIUM",
+    label: "Extra Creamed",
     className: "text-slate-300 bg-slate-300/15 border border-slate-300/30",
   },
   vip: {
-    label: "VIP",
+    label: "Creamy",
     className: "text-yellow-400 bg-yellow-400/15 border border-yellow-400/30",
   },
 };
