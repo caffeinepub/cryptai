@@ -4,9 +4,9 @@ import type { PlanId } from "../config/plans";
 interface CurrencyEntry {
   symbol: string;
   currency: string;
-  basic: number;
-  premium: number;
-  vip: number;
+  creamed: number;
+  extracreamed: number;
+  creamy: number;
 }
 
 interface CurrenciesData {
@@ -28,9 +28,9 @@ async function loadCurrencyData(): Promise<CurrenciesData> {
       default: {
         symbol: "$",
         currency: "USD",
-        basic: 4.89,
-        premium: 8.89,
-        vip: 29,
+        creamed: 4.89,
+        extracreamed: 8.89,
+        creamy: 29,
       },
     };
   }
@@ -55,16 +55,9 @@ async function detectCountryFromIP(): Promise<string> {
 const DEFAULT_ENTRY: CurrencyEntry = {
   symbol: "$",
   currency: "USD",
-  basic: 4.89,
-  premium: 8.89,
-  vip: 29,
-};
-
-// Map new plan IDs to old currency entry keys
-const PLAN_TO_CURRENCY_KEY: Record<string, "basic" | "premium" | "vip"> = {
-  creamed: "basic",
-  extracreamed: "premium",
-  creamy: "vip",
+  creamed: 4.89,
+  extracreamed: 8.89,
+  creamy: 29,
 };
 
 export function useCurrency() {
@@ -87,15 +80,13 @@ export function useCurrency() {
   }, []);
 
   function formatPrice(amount: number): string {
-    // Format with up to 2 decimal places, remove trailing .00 only if integer
     const isInteger = Number.isInteger(amount);
     return entry.symbol + (isInteger ? amount.toFixed(0) : amount.toFixed(2));
   }
 
   function getPlanPrice(planId: PlanId): number {
-    const key = PLAN_TO_CURRENCY_KEY[planId];
-    if (!key) return 0;
-    return entry[key];
+    if (planId === "uncreamed") return 0;
+    return entry[planId] ?? 0;
   }
 
   return {

@@ -16,18 +16,6 @@ const LEVEL_ORDER: Record<MembershipLevel, number> = {
   creamy: 3,
 };
 
-// Map old content-level labels to new plan IDs for canAccess
-const CONTENT_LEVEL_MAP: Record<string, MembershipLevel> = {
-  free: "uncreamed",
-  basic: "creamed",
-  premium: "extracreamed",
-  vip: "creamy",
-  uncreamed: "uncreamed",
-  creamed: "creamed",
-  extracreamed: "extracreamed",
-  creamy: "creamy",
-};
-
 interface MembershipContextValue {
   membershipLevel: MembershipLevel;
   canAccess: (level: string) => boolean;
@@ -58,7 +46,6 @@ export function MembershipProvider({
     | MembershipLevel
     | undefined;
 
-  // React to admin plan changes
   useEffect(() => {
     if (adminPlanOverride) {
       setMembershipLevel(adminPlanOverride);
@@ -67,7 +54,6 @@ export function MembershipProvider({
     }
   }, [adminPlanOverride, isConnected]);
 
-  // Wallet-based membership check
   useEffect(() => {
     if (adminPlanOverride) {
       setMembershipLevel(adminPlanOverride);
@@ -82,18 +68,25 @@ export function MembershipProvider({
     const checkMembership = async () => {
       setIsChecking(true);
       try {
-        const [vipNFT, premiumNFT, basicNFT, coinBalance] = await Promise.all([
-          checkNFTOwnership(CONTRACT_ADDRESSES.nftVip, connectedAddress),
-          checkNFTOwnership(CONTRACT_ADDRESSES.nftPremium, connectedAddress),
-          checkNFTOwnership(CONTRACT_ADDRESSES.nftBasic, connectedAddress),
-          checkCoinXBalance(CONTRACT_ADDRESSES.coinX, connectedAddress),
-        ]);
+        const [creamyNFT, extracreamedNFT, creamedNFT, coinBalance] =
+          await Promise.all([
+            checkNFTOwnership(CONTRACT_ADDRESSES.nftCreamy, connectedAddress),
+            checkNFTOwnership(
+              CONTRACT_ADDRESSES.nftExtracreamed,
+              connectedAddress,
+            ),
+            checkNFTOwnership(CONTRACT_ADDRESSES.nftCreamed, connectedAddress),
+            checkCoinXBalance(CONTRACT_ADDRESSES.coin, connectedAddress),
+          ]);
 
-        if (vipNFT || coinBalance >= COIN_THRESHOLDS.vip) {
+        if (creamyNFT || coinBalance >= COIN_THRESHOLDS.creamy) {
           setMembershipLevel("creamy");
-        } else if (premiumNFT || coinBalance >= COIN_THRESHOLDS.premium) {
+        } else if (
+          extracreamedNFT ||
+          coinBalance >= COIN_THRESHOLDS.extracreamed
+        ) {
           setMembershipLevel("extracreamed");
-        } else if (basicNFT || coinBalance >= COIN_THRESHOLDS.basic) {
+        } else if (creamedNFT || coinBalance >= COIN_THRESHOLDS.creamed) {
           setMembershipLevel("creamed");
         } else {
           setMembershipLevel("uncreamed");
@@ -113,8 +106,8 @@ export function MembershipProvider({
   ]);
 
   const canAccess = (level: string): boolean => {
-    const mappedLevel = CONTENT_LEVEL_MAP[level];
-    const required = mappedLevel ? LEVEL_ORDER[mappedLevel] : 0;
+    const normalised = level as MembershipLevel;
+    const required = LEVEL_ORDER[normalised] ?? 0;
     return LEVEL_ORDER[membershipLevel] >= required;
   };
 

@@ -37,14 +37,15 @@ export const NEWS_TICKER_DATA: NewsTickerItem[] = [
   { type: "news", text: "DeFi total locked value crosses $120 billion" },
 ];
 
+export type ArticleAccessLevel = "free" | "creamed" | "extracreamed" | "creamy";
+
 export interface ArticleTickerItem {
   type: "article";
   title: string;
-  accessLevel: "free" | "basic" | "premium" | "vip";
+  accessLevel: ArticleAccessLevel;
 }
 
 export const ARTICLE_TICKER_DATA: ArticleTickerItem[] = [
-  // Latest per access level
   {
     type: "article",
     title: "The Rise of Large Language Models in 2025",
@@ -53,17 +54,17 @@ export const ARTICLE_TICKER_DATA: ArticleTickerItem[] = [
   {
     type: "article",
     title: "DeFi Yield Strategies for 2025: A Practical Guide",
-    accessLevel: "basic",
+    accessLevel: "creamed",
   },
   {
     type: "article",
     title: "Institutional Crypto Accumulation: On-Chain Evidence",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
   },
   {
     type: "article",
     title: "Exclusive: Q2 2025 Crypto Market Outlook",
-    accessLevel: "vip",
+    accessLevel: "creamy",
   },
   {
     type: "article",
@@ -73,6 +74,6 @@ export const ARTICLE_TICKER_DATA: ArticleTickerItem[] = [
   {
     type: "article",
     title: "Multi-Agent AI Systems: Architecture Deep Dive",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
   },
 ];

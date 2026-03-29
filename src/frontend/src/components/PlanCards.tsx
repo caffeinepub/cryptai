@@ -272,7 +272,7 @@ export function PlanCards() {
                   <div className="flex items-center gap-2 py-2">
                     <Coins size={14} style={{ color: plan.labelColor }} />
                     <span className="text-sm text-foreground">
-                      {plan.coinXAmount}
+                      {plan.tokenAmount}
                     </span>
                     <a
                       href={plan.coinBuyUrl}

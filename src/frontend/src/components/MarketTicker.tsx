@@ -1,23 +1,27 @@
 import {
   ARTICLE_TICKER_DATA,
+  type ArticleAccessLevel,
   NEWS_TICKER_DATA,
   TICKER_DATA,
 } from "../config/ticker";
 
-const ACCESS_BADGE: Record<string, { label: string; className: string }> = {
+const ACCESS_BADGE: Record<
+  ArticleAccessLevel,
+  { label: string; className: string }
+> = {
   free: {
     label: "Uncreamed",
     className: "text-green-400 bg-green-400/15 border border-green-400/30",
   },
-  basic: {
+  creamed: {
     label: "Creamed",
     className: "text-amber-400 bg-amber-400/15 border border-amber-400/30",
   },
-  premium: {
+  extracreamed: {
     label: "Extra Creamed",
     className: "text-slate-300 bg-slate-300/15 border border-slate-300/30",
   },
-  vip: {
+  creamy: {
     label: "Creamy",
     className: "text-yellow-400 bg-yellow-400/15 border border-yellow-400/30",
   },
@@ -70,7 +74,7 @@ function NewsItem({ text }: { text: string }) {
 function ArticleItem({
   title,
   accessLevel,
-}: { title: string; accessLevel: "free" | "basic" | "premium" | "vip" }) {
+}: { title: string; accessLevel: ArticleAccessLevel }) {
   const badge = ACCESS_BADGE[accessLevel];
   return (
     <span className="inline-flex items-center gap-2 px-4 whitespace-nowrap">
@@ -105,7 +109,6 @@ export function MarketTicker() {
   }));
 
   const allItems = [...priceItems, ...newsItems, ...articleItems];
-  // Duplicate for seamless scroll loop, add suffix to uid for uniqueness
   const doubled = [
     ...allItems,
     ...allItems.map((item) => ({ ...item, uid: `${item.uid}-b` })),

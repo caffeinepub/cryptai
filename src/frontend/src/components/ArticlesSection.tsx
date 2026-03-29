@@ -5,7 +5,7 @@ import { useMembership } from "../contexts/MembershipContext";
 import { type Article, ArticleCard } from "./ArticleCard";
 
 const ARTICLES: Article[] = [
-  // Free articles
+  // Free (Uncreamed) articles
   {
     id: "f1",
     title: "The Rise of Large Language Models in 2025",
@@ -58,14 +58,14 @@ const ARTICLES: Article[] = [
     typeLabel: "Article",
     arabic_only: false,
   },
-  // Creamed (basic) articles
+  // Creamed articles
   {
     id: "b1",
     title: "DeFi Yield Strategies for 2025: A Practical Guide",
     summary:
       "Advanced yield farming strategies across major DeFi protocols with risk assessment and ROI analysis.",
     publishDate: "2025-03-22",
-    accessLevel: "basic",
+    accessLevel: "creamed",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-amber-800 to-orange-800",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
@@ -78,7 +78,7 @@ const ARTICLES: Article[] = [
     summary:
       "A technical comparison of LoRA, QLoRA, and full fine-tuning approaches for production AI deployments.",
     publishDate: "2025-03-19",
-    accessLevel: "basic",
+    accessLevel: "creamed",
     category: "AI",
     gradient: "bg-gradient-to-br from-blue-800 to-violet-800",
     topicLabels: ["AI"],
@@ -91,7 +91,7 @@ const ARTICLES: Article[] = [
     summary:
       "Key on-chain metrics and market indicators that historically precede altcoin bull markets.",
     publishDate: "2025-03-16",
-    accessLevel: "basic",
+    accessLevel: "creamed",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-green-900 to-emerald-800",
     topicLabels: ["Market & microeconomy"],
@@ -104,21 +104,21 @@ const ARTICLES: Article[] = [
     summary:
       "Step-by-step guide to building production-ready Retrieval Augmented Generation systems.",
     publishDate: "2025-03-12",
-    accessLevel: "basic",
+    accessLevel: "creamed",
     category: "AI",
     gradient: "bg-gradient-to-br from-indigo-900 to-blue-800",
     topicLabels: ["AI"],
     typeLabel: "Video",
     arabic_only: false,
   },
-  // Extra Creamed (premium) articles
+  // Extra Creamed articles
   {
     id: "p1",
     title: "Institutional Crypto Accumulation: On-Chain Evidence",
     summary:
       "Analyzing whale wallet movements and exchange outflows to track institutional accumulation patterns.",
     publishDate: "2025-03-23",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-slate-700 to-gray-700",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
@@ -131,7 +131,7 @@ const ARTICLES: Article[] = [
     summary:
       "How leading organizations are deploying multi-agent frameworks for complex reasoning and task automation.",
     publishDate: "2025-03-21",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
     category: "AI",
     gradient: "bg-gradient-to-br from-violet-800 to-purple-900",
     topicLabels: ["AI"],
@@ -144,7 +144,7 @@ const ARTICLES: Article[] = [
     summary:
       "Exploiting price inefficiencies across chains with MEV bots and bridge optimization techniques.",
     publishDate: "2025-03-17",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-rose-900 to-red-800",
     topicLabels: ["Crypto projects"],
@@ -157,21 +157,21 @@ const ARTICLES: Article[] = [
     summary:
       "How to properly backtest ML trading strategies to avoid overfitting and data snooping biases.",
     publishDate: "2025-03-13",
-    accessLevel: "premium",
+    accessLevel: "extracreamed",
     category: "AI",
     gradient: "bg-gradient-to-br from-cyan-900 to-teal-800",
     topicLabels: ["AI", "Market & microeconomy"],
     typeLabel: "Graphic",
     arabic_only: false,
   },
-  // Creamy (VIP) articles
+  // Creamy articles
   {
     id: "v1",
     title: "Exclusive: Q2 2025 Crypto Market Outlook",
     summary:
       "Our proprietary model's forecast for major assets through Q2 2025, with actionable entry/exit signals.",
     publishDate: "2025-03-25",
-    accessLevel: "vip",
+    accessLevel: "creamy",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-yellow-800 to-amber-700",
     topicLabels: ["Market & microeconomy", "Crypto projects"],
@@ -184,7 +184,7 @@ const ARTICLES: Article[] = [
     summary:
       "Our ensemble ML models' predictions for AI-sector equities with confidence intervals and risk scores.",
     publishDate: "2025-03-24",
-    accessLevel: "vip",
+    accessLevel: "creamy",
     category: "AI",
     gradient: "bg-gradient-to-br from-yellow-700 to-amber-700",
     topicLabels: ["AI", "Market & microeconomy"],
@@ -197,7 +197,7 @@ const ARTICLES: Article[] = [
     summary:
       "Curated list of pre-public AI companies with strong fundamentals and upcoming funding rounds.",
     publishDate: "2025-03-20",
-    accessLevel: "vip",
+    accessLevel: "creamy",
     category: "AI",
     gradient: "bg-gradient-to-br from-amber-900 to-orange-800",
     topicLabels: ["AI"],
@@ -210,7 +210,7 @@ const ARTICLES: Article[] = [
     summary:
       "Jurisdiction-by-jurisdiction analysis of crypto regulatory developments and optimal structuring strategies.",
     publishDate: "2025-03-14",
-    accessLevel: "vip",
+    accessLevel: "creamy",
     category: "Crypto",
     gradient: "bg-gradient-to-br from-yellow-900 to-amber-800",
     topicLabels: ["Crypto projects", "Market & microeconomy"],
@@ -234,65 +234,55 @@ export function ArticlesSection() {
   const filtered = (level: Article["accessLevel"]) =>
     sortByDate(
       ARTICLES.filter((a) => {
-        // arabic_only articles are only shown in Arab regions
         if (a.arabic_only && !isArabicRegion) return false;
-        // legacy isArabicOriginal support
         if (a.isArabicOriginal && !isArabicRegion) return false;
         return a.accessLevel === level;
       }),
     );
 
   const freeArticles = filtered("free");
-  const basicArticles = filtered("basic");
-  const premiumArticles = filtered("premium");
-  const vipArticles = filtered("vip");
+  const creamedArticles = filtered("creamed");
+  const extracreamedArticles = filtered("extracreamed");
+  const creamyArticles = filtered("creamy");
 
   const allShown = [
     ...freeArticles,
-    ...basicArticles,
-    ...premiumArticles,
-    ...vipArticles,
+    ...creamedArticles,
+    ...extracreamedArticles,
+    ...creamyArticles,
   ];
 
-  // Determine access per article using new membership level names
   const getAccess = (article: Article, indexInLevel: number): boolean => {
     const level = membershipLevel;
 
     if (level === "creamy") return true;
     if (level === "extracreamed") {
-      return article.accessLevel !== "vip";
+      return article.accessLevel !== "creamy";
     }
     if (level === "creamed") {
-      return article.accessLevel === "free" || article.accessLevel === "basic";
+      return (
+        article.accessLevel === "free" || article.accessLevel === "creamed"
+      );
     }
 
-    // uncreamed / not logged in
+    // uncreamed
     if (article.accessLevel === "free") {
       if (!isLoggedIn) {
-        // Only first free article
         const freeIdx = freeArticles.findIndex((a) => a.id === article.id);
         return freeIdx === 0;
       }
-      // Logged in (registered): all free articles
       return true;
     }
 
-    if (article.accessLevel === "basic") {
+    if (article.accessLevel === "creamed") {
       if (!isLoggedIn) return false;
-      // Registered user: only first basic article
+      // Registered user: only first creamed article
       return indexInLevel === 0;
     }
 
     return false;
   };
 
-  /**
-   * Get display title/summary for an article.
-   * Rules:
-   * - arabic_only articles: always use Arabic ('ar') translation
-   * - all other articles: use currentLanguage translation, with fallback to English ('en')
-   *   NEVER fall back to Arabic for non-arabic_only articles
-   */
   const getDisplayText = (
     article: Article,
   ): { title: string; summary: string } => {
@@ -302,7 +292,6 @@ export function ArticlesSection() {
     }
 
     if (article.arabic_only) {
-      // Arabic-only content: always show the Arabic version
       const arTrans = translations.ar;
       return {
         title: arTrans?.title || article.title,
@@ -310,11 +299,8 @@ export function ArticlesSection() {
       };
     }
 
-    // For all other articles: use currentLanguage, fall back to English (never Arabic)
     const langTrans = translations[currentLanguage];
     const enTrans = translations.en;
-
-    // If current language is Arabic but article is not arabic_only, use English
     const preferredTrans =
       currentLanguage === "ar" ? enTrans : (langTrans ?? enTrans);
 
@@ -324,7 +310,7 @@ export function ArticlesSection() {
     };
   };
 
-  let basicCounter = 0;
+  let creamedCounter = 0;
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -337,9 +323,9 @@ export function ArticlesSection() {
       >
         {allShown.map((article, idx) => {
           let indexInLevel = 0;
-          if (article.accessLevel === "basic") {
-            indexInLevel = basicCounter;
-            basicCounter++;
+          if (article.accessLevel === "creamed") {
+            indexInLevel = creamedCounter;
+            creamedCounter++;
           }
           const access = getAccess(article, indexInLevel);
           const { title: displayTitle, summary: displaySummary } =

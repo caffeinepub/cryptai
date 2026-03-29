@@ -1,5 +1,5 @@
 // =============================================================================
-// ZENTRALE KONFIGURATIONSDATEI -- CryptAI
+// ZENTRALE KONFIGURATIONSDATEI -- CreamyCryptoAI.org
 // Hier alle wichtigen Werte einmalig ändern, alles andere passt sich an.
 // =============================================================================
 
@@ -11,28 +11,28 @@
 export const FREE_TIMER_MINUTES = 120; // TODO: Vor Go-Live auf 10 setzen
 
 // ---------------------------------------------------------------------------
-// PLAN-PREISE (EUR base monthly + CoinX + Buy Links)
+// PLAN-PREISE (EUR base monthly + Token amount + Buy Links)
 // EUR is the base currency. USD users see the same number with $ sign.
 // TODO: integrate exchange rate API for local currency conversion
 // ---------------------------------------------------------------------------
 export const PLAN_PRICES = {
-  basic: {
+  creamed: {
     eur: 4.89,
-    coinX: "500 CoinX",
+    tokens: "500 Tokens",
     coinBuyUrl: "https://creamcoin.fun/tokens500",
-    nftBuyUrl: "https://creamcoin.fun/NFT_Basic",
+    nftBuyUrl: "https://creamcoin.fun/NFT_Creamed",
   },
-  premium: {
+  extracreamed: {
     eur: 8.89,
-    coinX: "1000 CoinX",
+    tokens: "1000 Tokens",
     coinBuyUrl: "https://creamcoin.fun/tokens1000",
-    nftBuyUrl: "https://creamcoin.fun/NFT_Premium",
+    nftBuyUrl: "https://creamcoin.fun/NFT_ExtraCreamed",
   },
-  vip: {
+  creamy: {
     eur: 29,
-    coinX: "5000 CoinX",
+    tokens: "5000 Tokens",
     coinBuyUrl: "https://creamcoin.fun/tokens5000",
-    nftBuyUrl: "https://creamcoin.fun/NFT_VIP",
+    nftBuyUrl: "https://creamcoin.fun/NFT_Creamy",
   },
 };
 
@@ -46,7 +46,7 @@ export const DEV_RESET_CODE = "0000";
 // ---------------------------------------------------------------------------
 // NEWSLETTER & KONTAKT
 // ---------------------------------------------------------------------------
-export const SITE_EMAIL = ""; // z.B. "info@cryptai.com"
+export const SITE_EMAIL = ""; // z.B. "info@creamycryptoai.org"
 
 // ---------------------------------------------------------------------------
 // SOCIAL LINKS

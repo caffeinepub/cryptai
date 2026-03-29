@@ -9,7 +9,7 @@ const METHODS = [
   },
   {
     icon: "🪙",
-    label: "CoinX Token",
+    label: "Token",
     ocid: "payment.coinx.button",
   },
   {

@@ -2,7 +2,7 @@ import { Calendar, Lock } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useTheme } from "../contexts/ThemeContext";
 
-export type AccessLevel = "free" | "basic" | "premium" | "vip";
+export type AccessLevel = "free" | "creamed" | "extracreamed" | "creamy";
 export type TopicLabel = "Crypto projects" | "Market & microeconomy" | "AI";
 export type TypeLabel = "Video" | "Article" | "Table" | "Graphic" | "Text";
 
@@ -22,16 +22,16 @@ export interface Article {
 
 const BADGE_STYLES: Record<AccessLevel, string> = {
   free: "badge-free",
-  basic: "badge-basic",
-  premium: "badge-premium",
-  vip: "badge-vip",
+  creamed: "badge-creamed",
+  extracreamed: "badge-extracreamed",
+  creamy: "badge-creamy",
 };
 
 const LEVEL_LABELS: Record<AccessLevel, string> = {
   free: "Uncreamed",
-  basic: "Creamed",
-  premium: "Extra Creamed",
-  vip: "Creamy",
+  creamed: "Creamed",
+  extracreamed: "Extra Creamed",
+  creamy: "Creamy",
 };
 
 const PLAN_COLORS: Record<
@@ -39,13 +39,17 @@ const PLAN_COLORS: Record<
   { border: string; shadow: string; bg: string }
 > = {
   free: { border: "#4ade80", shadow: "rgba(74,222,128,0.45)", bg: "#4ade80" },
-  basic: { border: "#b87333", shadow: "rgba(184,115,51,0.45)", bg: "#b87333" },
-  premium: {
+  creamed: {
+    border: "#b87333",
+    shadow: "rgba(184,115,51,0.45)",
+    bg: "#b87333",
+  },
+  extracreamed: {
     border: "#94a3b8",
     shadow: "rgba(148,163,184,0.45)",
     bg: "#94a3b8",
   },
-  vip: { border: "#D4AF37", shadow: "rgba(212,175,55,0.45)", bg: "#D4AF37" },
+  creamy: { border: "#D4AF37", shadow: "rgba(212,175,55,0.45)", bg: "#D4AF37" },
 };
 
 interface ArticleCardProps {

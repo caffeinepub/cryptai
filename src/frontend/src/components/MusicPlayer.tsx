@@ -118,7 +118,7 @@ export function MusicPlayer() {
     ? getTrackUrl(currentGenre, currentFilename)
     : "";
 
-  const isPaidPlan = canAccess("basic");
+  const isPaidPlan = canAccess("creamed");
   const canDownloadNow =
     isPaidPlan || (isLoggedIn && downloadCountState < FREE_MONTHLY_LIMIT);
 

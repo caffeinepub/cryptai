@@ -1,12 +1,12 @@
 export const CONTRACT_ADDRESSES = {
-  coinX: "xxxxxxxxxxxxxxxxxxadresse",
-  nftBasic: "xxxxxxxxxxxxxxxxxxadresse",
-  nftPremium: "xxxxxxxxxxxxxxxxxxadresse",
-  nftVip: "xxxxxxxxxxxxxxxxxxadresse",
+  coin: "xxxxxxxxxxxxxxxxxxadresse",
+  nftCreamed: "xxxxxxxxxxxxxxxxxxadresse",
+  nftExtracreamed: "xxxxxxxxxxxxxxxxxxadresse",
+  nftCreamy: "xxxxxxxxxxxxxxxxxxadresse",
 };
 
 export const COIN_THRESHOLDS = {
-  basic: 500,
-  premium: 2000,
-  vip: 10000,
+  creamed: 500,
+  extracreamed: 2000,
+  creamy: 10000,
 };

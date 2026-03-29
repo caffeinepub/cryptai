@@ -6,7 +6,7 @@ export interface PlanConfig {
   id: PlanId;
   labelKey: string;
   eurMonthly: number;
-  coinXAmount?: string;
+  tokenAmount?: string;
   coinBuyUrl?: string;
   nftType?: string;
   nftBuyUrl?: string;
@@ -35,11 +35,11 @@ export const PLANS: PlanConfig[] = [
   {
     id: "creamed",
     labelKey: "plan_creamed",
-    eurMonthly: PLAN_PRICES.basic.eur,
-    coinXAmount: "500 Tokens",
-    coinBuyUrl: PLAN_PRICES.basic.coinBuyUrl,
-    nftType: "NFT Basic",
-    nftBuyUrl: PLAN_PRICES.basic.nftBuyUrl,
+    eurMonthly: PLAN_PRICES.creamed.eur,
+    tokenAmount: "500 Tokens",
+    coinBuyUrl: PLAN_PRICES.creamed.coinBuyUrl,
+    nftType: "NFT Creamed",
+    nftBuyUrl: PLAN_PRICES.creamed.nftBuyUrl,
     borderClass: "plan-copper",
     labelColor: "#B87333",
     benefitKeys: [
@@ -53,11 +53,11 @@ export const PLANS: PlanConfig[] = [
   {
     id: "extracreamed",
     labelKey: "plan_extracreamed",
-    eurMonthly: PLAN_PRICES.premium.eur,
-    coinXAmount: "1000 Tokens",
-    coinBuyUrl: PLAN_PRICES.premium.coinBuyUrl,
-    nftType: "NFT Premium",
-    nftBuyUrl: PLAN_PRICES.premium.nftBuyUrl,
+    eurMonthly: PLAN_PRICES.extracreamed.eur,
+    tokenAmount: "1000 Tokens",
+    coinBuyUrl: PLAN_PRICES.extracreamed.coinBuyUrl,
+    nftType: "NFT Extra Creamed",
+    nftBuyUrl: PLAN_PRICES.extracreamed.nftBuyUrl,
     borderClass: "plan-silver",
     labelColor: "#9CA3AF",
     benefitKeys: [
@@ -71,11 +71,11 @@ export const PLANS: PlanConfig[] = [
   {
     id: "creamy",
     labelKey: "plan_creamy",
-    eurMonthly: PLAN_PRICES.vip.eur,
-    coinXAmount: "5000 Tokens",
-    coinBuyUrl: PLAN_PRICES.vip.coinBuyUrl,
-    nftType: "NFT VIP",
-    nftBuyUrl: PLAN_PRICES.vip.nftBuyUrl,
+    eurMonthly: PLAN_PRICES.creamy.eur,
+    tokenAmount: "5000 Tokens",
+    coinBuyUrl: PLAN_PRICES.creamy.coinBuyUrl,
+    nftType: "NFT Creamy",
+    nftBuyUrl: PLAN_PRICES.creamy.nftBuyUrl,
     borderClass: "plan-gold",
     labelColor: "#D4AF37",
     benefitKeys: [
