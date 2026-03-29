@@ -69,6 +69,8 @@ export function ArticleCard({
   const colors = PLAN_COLORS[article.accessLevel];
 
   const cardBg = isDark ? "#18181b" : "#ffffff";
+  const topBarBg = isDark ? "#2a2a2d" : "#e4e4e7";
+  const topBarText = isDark ? "#ffffff" : "#18181b";
   const defaultBorder = isDark ? "rgba(63,63,70,0.5)" : "rgba(228,228,231,0.8)";
   const titleColor = isDark ? "#ffffff" : "#18181b";
   const mutedColor = isDark ? "#a1a1aa" : "#71717a";
@@ -92,30 +94,23 @@ export function ArticleCard({
         el.style.boxShadow = "none";
       }}
     >
-      {/* Colored top bar */}
+      {/* Top bar */}
       <div
-        style={{ backgroundColor: colors.bg, height: "38px" }}
+        style={{ backgroundColor: topBarBg, height: "38px" }}
         className="w-full flex items-center justify-center px-3"
       >
         {!isAccessGranted ? (
-          <span className="flex items-center gap-1.5 text-white text-xs font-semibold drop-shadow">
+          <span
+            className="flex items-center gap-1.5 text-xs font-semibold"
+            style={{ color: topBarText }}
+          >
             <Lock size={12} />
             {t("upgrade_to")} {LEVEL_LABELS[article.accessLevel]}
           </span>
         ) : (
-          <div className="flex flex-wrap items-center gap-1.5 overflow-hidden">
-            {article.topicLabels.map((label) => (
-              <span
-                key={label}
-                className="text-white/90 text-xs font-medium truncate"
-              >
-                {label}
-              </span>
-            ))}
-            <span className="text-white/70 text-xs font-medium border border-white/30 rounded px-1">
-              {article.typeLabel}
-            </span>
-          </div>
+          <span className="text-xs font-semibold" style={{ color: topBarText }}>
+            {LEVEL_LABELS[article.accessLevel]}
+          </span>
         )}
       </div>
 
