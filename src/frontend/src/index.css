@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 1rem;
+    /* Light mode tokens */
+    --background: 0.98 0.003 245;
+    --foreground: 0.11 0.006 245;
+    --card: 1 0 0;
+    --card-foreground: 0.11 0.006 245;
+    --popover: 1 0 0;
+    --popover-foreground: 0.11 0.006 245;
+    --primary: 0.52 0.24 264;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.93 0.006 245;
+    --secondary-foreground: 0.11 0.006 245;
+    --muted: 0.93 0.006 245;
+    --muted-foreground: 0.45 0.01 245;
+    --accent: 0.93 0.006 245;
+    --accent-foreground: 0.11 0.006 245;
+    --destructive: 0.62 0.22 27;
+    --destructive-foreground: 1 0 0;
+    --border: 0.92 0.007 245;
+    --input: 0.92 0.007 245;
+    --ring: 0.52 0.24 264;
+    --success: 0.72 0.19 148;
+    --chart-1: 0.52 0.24 264;
+    --chart-2: 0.72 0.19 148;
+    --chart-3: 0.62 0.22 27;
+    --chart-4: 0.56 0.12 62;
+    --chart-5: 0.75 0.14 88;
+    --sidebar: 0.97 0.003 245;
+    --sidebar-foreground: 0.11 0.006 245;
+    --sidebar-primary: 0.52 0.24 264;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.93 0.006 245;
+    --sidebar-accent-foreground: 0.11 0.006 245;
+    --sidebar-border: 0.92 0.007 245;
+    --sidebar-ring: 0.52 0.24 264;
+  }
+
+  .dark {
+    --background: 0.095 0.006 245;
+    --foreground: 0.94 0.006 245;
+    --card: 0.13 0.008 245;
+    --card-foreground: 0.94 0.006 245;
+    --popover: 0.13 0.008 245;
+    --popover-foreground: 0.94 0.006 245;
+    --primary: 0.52 0.24 264;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.18 0.009 245;
+    --secondary-foreground: 0.94 0.006 245;
+    --muted: 0.18 0.009 245;
+    --muted-foreground: 0.58 0.014 245;
+    --accent: 0.22 0.012 245;
+    --accent-foreground: 0.94 0.006 245;
+    --destructive: 0.62 0.22 27;
+    --destructive-foreground: 1 0 0;
+    --border: 0.22 0.012 245;
+    --input: 0.22 0.012 245;
+    --ring: 0.52 0.24 264;
+    --success: 0.72 0.19 148;
+    --chart-1: 0.52 0.24 264;
+    --chart-2: 0.72 0.19 148;
+    --chart-3: 0.62 0.22 27;
+    --chart-4: 0.56 0.12 62;
+    --chart-5: 0.75 0.14 88;
+    --sidebar: 0.11 0.006 245;
+    --sidebar-foreground: 0.94 0.006 245;
+    --sidebar-primary: 0.52 0.24 264;
+    --sidebar-primary-foreground: 1 0 0;
+    --sidebar-accent: 0.18 0.009 245;
+    --sidebar-accent-foreground: 0.94 0.006 245;
+    --sidebar-border: 0.22 0.012 245;
+    --sidebar-ring: 0.52 0.24 264;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .ticker-scroll {
+    animation: ticker-scroll 40s linear infinite;
+  }
+
+  @keyframes ticker-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .plan-copper {
+    border-color: #b87333;
+    box-shadow: 0 0 24px 0 rgba(184, 115, 51, 0.25);
+  }
+  .plan-silver {
+    border-color: #9ca3af;
+    box-shadow: 0 0 24px 0 rgba(156, 163, 175, 0.25);
+  }
+  .plan-gold {
+    border-color: #d4af37;
+    box-shadow: 0 0 24px 0 rgba(212, 175, 55, 0.25);
+  }
+
+  .badge-free {
+    background-color: #166534;
+    color: #86efac;
+  }
+  .badge-basic {
+    background-color: #78350f;
+    color: #fcd34d;
+  }
+  .badge-premium {
+    background-color: #1f2937;
+    color: #d1d5db;
+  }
+  .badge-vip {
+    background-color: #78350f;
+    color: #fde68a;
+  }
+
+  .dark .badge-free {
+    background-color: #14532d;
+    color: #86efac;
+  }
+  .dark .badge-basic {
+    background-color: #431407;
+    color: #fdba74;
+  }
+  .dark .badge-premium {
+    background-color: #111827;
+    color: #e5e7eb;
+  }
+  .dark .badge-vip {
+    background-color: #451a03;
+    color: #fde68a;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.3s ease-out;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+}
