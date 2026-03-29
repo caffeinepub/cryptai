@@ -48,8 +48,8 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="font-display font-bold text-xl mb-2">
-              <span className="text-foreground">Crypt</span>
-              <span className="text-primary">AI</span>
+              <span className="text-foreground">Cryptoai</span>
+              <span className="text-primary">.org</span>
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
               {t("footer_tagline")}
@@ -80,7 +80,6 @@ export function Footer() {
           <div>
             <h4 className="font-semibold text-foreground mb-4 text-sm uppercase tracking-wider flex items-center gap-2">
               cREAMY cOMMUNITY
-              {/* Logo: 2x bigger → h-10 w-10, clickable: opens creamcoin.fun + animation */}
               <button
                 type="button"
                 onClick={handleLogoClick}
@@ -129,7 +128,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
           <span>
-            © {year} CryptAI · Future Compass Lab. All rights reserved.
+            © {year} Cryptoai.org · Future Compass Lab. All rights reserved.
           </span>
           <a
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${hostname}`}

@@ -254,7 +254,8 @@ export type TranslationKey =
   | "your_current_plan"
   | "save_25"
   | "best_plan"
-  | "active_badge";
+  | "active_badge"
+  | "researchers_community";
 
 export interface RegionLanguageConfig {
   defaultLang: Language;
@@ -353,7 +354,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "Subscription failed. Please try again.",
     plans_title: "Choose Your Plan",
     articles_title: "Latest Insights",
-    footer_tagline: "Your gateway to AI & Crypto intelligence.",
+    footer_tagline: "Where crypto meets AI.",
     ai_desc:
       "Explore the latest in artificial intelligence, machine learning, and emerging AI technologies.",
     crypto_desc:
@@ -405,6 +406,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "Save 25%",
     best_plan: "Best Plan",
     active_badge: "Active",
+    researchers_community: "Researchers' Community",
   },
   de: {
     nav_home: "Startseite",
@@ -424,7 +426,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "Abonnement fehlgeschlagen. Bitte erneut versuchen.",
     plans_title: "Wähle deinen Plan",
     articles_title: "Neueste Einblicke",
-    footer_tagline: "Dein Tor zu KI & Krypto-Wissen.",
+    footer_tagline: "Wo Krypto auf KI trifft.",
     ai_desc:
       "Entdecke die neuesten Entwicklungen in künstlicher Intelligenz und maschinellem Lernen.",
     crypto_desc:
@@ -476,6 +478,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "25% sparen",
     best_plan: "Bester Plan",
     active_badge: "Aktiv",
+    researchers_community: "Forscher-Community",
   },
   fr: {
     nav_home: "Accueil",
@@ -496,7 +499,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "Échec de l'abonnement. Veuillez réessayer.",
     plans_title: "Choisissez votre plan",
     articles_title: "Dernières analyses",
-    footer_tagline: "Votre passerelle vers l'intelligence IA & Crypto.",
+    footer_tagline: "Là où la crypto rencontre l'IA.",
     ai_desc:
       "Explorez les dernières avancées en intelligence artificielle et apprentissage automatique.",
     crypto_desc:
@@ -548,6 +551,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "Économisez 25%",
     best_plan: "Meilleur Plan",
     active_badge: "Actif",
+    researchers_community: "Communauté des Chercheurs",
   },
   ar: {
     nav_home: "الرئيسية",
@@ -567,7 +571,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "فشل الاشتراك. يرجى المحاولة مرة أخرى.",
     plans_title: "اختر خطتك",
     articles_title: "أحدث المقالات",
-    footer_tagline: "بوابتك لذكاء الذكاء الاصطناعي والعملات المشفرة.",
+    footer_tagline: "حيث تلتقي العملات المشفرة بالذكاء الاصطناعي.",
     ai_desc: "استكشف أحدث التطورات في الذكاء الاصطناعي والتعلم الآلي.",
     crypto_desc: "بيانات السوق في الوقت الفعلي وتحليلات العملات المشفرة.",
     upgrade_to: "ترقية إلى",
@@ -617,6 +621,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "وفر 25%",
     best_plan: "أفضل خطة",
     active_badge: "نشط",
+    researchers_community: "مجتمع الباحثين",
   },
   es: {
     nav_home: "Inicio",
@@ -636,7 +641,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "Error en la suscripción. Por favor intenta de nuevo.",
     plans_title: "Elige tu plan",
     articles_title: "Últimas perspectivas",
-    footer_tagline: "Tu puerta de entrada a la inteligencia en IA y Cripto.",
+    footer_tagline: "Donde las criptomonedas se encuentran con la IA.",
     ai_desc:
       "Explora lo último en inteligencia artificial y aprendizaje automático.",
     crypto_desc:
@@ -688,6 +693,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "Ahorra 25%",
     best_plan: "Mejor Plan",
     active_badge: "Activo",
+    researchers_community: "Comunidad de Investigadores",
   },
   tr: {
     nav_home: "Ana Sayfa",
@@ -707,7 +713,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "Abonelik başarısız. Lütfen tekrar deneyin.",
     plans_title: "Planını Seç",
     articles_title: "Son Analizler",
-    footer_tagline: "Yapay Zeka & Kripto zekansına açılan kapınız.",
+    footer_tagline: "Kriptonun yapay zeka ile buluştuğu yer.",
     ai_desc: "Yapay zeka ve makine öğrenmesindeki en son gelişmeleri keşfedin.",
     crypto_desc:
       "Gerçek zamanlı piyasa verileri, kripto analizleri ve blockchain bilgileri.",
@@ -758,6 +764,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "%25 tasarruf",
     best_plan: "En İyi Plan",
     active_badge: "Aktif",
+    researchers_community: "Araştırmacılar Topluluğu",
   },
   fa: {
     nav_home: "خانه",
@@ -777,7 +784,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     subscribe_error: "اشتراک ناموفق بود. لطفاً دوباره امتحان کنید.",
     plans_title: "طرح خود را انتخاب کنید",
     articles_title: "آخرین تحلیل‌ها",
-    footer_tagline: "دروازه شما به هوش هوش مصنوعی و کریپتو.",
+    footer_tagline: "جایی که کریپتو با هوش مصنوعی دیدار می‌کند.",
     ai_desc: "آخرین پیشرفت‌های هوش مصنوعی و یادگیری ماشین را کاوش کنید.",
     crypto_desc: "داده‌های بازار در زمان واقعی، تحلیل کریپتو و بینش‌های بلاکچین.",
     upgrade_to: "ارتقا به",
@@ -827,6 +834,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
     save_25: "۲۵٪ صرفه‌جویی",
     best_plan: "بهترین پلن",
     active_badge: "فعال",
+    researchers_community: "جامعه پژوهشگران",
   },
 };
 
@@ -849,7 +857,7 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   subscribe_error: "Falha na subscrição. Por favor tente novamente.",
   plans_title: "Escolha o seu plano",
   articles_title: "Últimas análises",
-  footer_tagline: "A sua porta de entrada para inteligência em IA & Cripto.",
+  footer_tagline: "Onde as criptomoedas encontram a IA.",
   ai_desc:
     "Explore as últimas novidades em inteligência artificial e aprendizagem automática.",
   crypto_desc:
@@ -901,4 +909,5 @@ export const TRANSLATIONS: Record<string, Record<TranslationKey, string>> = {
   save_25: "Economize 25%",
   best_plan: "Melhor Plano",
   active_badge: "Ativo",
+  researchers_community: "Comunidade de Pesquisadores",
 };

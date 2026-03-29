@@ -82,8 +82,9 @@ export function Header({ navigate }: HeaderProps) {
               className="flex items-center gap-1 font-display font-bold text-xl tracking-tight"
               data-ocid="nav.home.link"
             >
-              <span className="text-foreground">Crypt</span>
-              <span className="text-primary">AI</span>
+              <span className="text-foreground">
+                {t("researchers_community")}
+              </span>
             </button>
             {/* Logo: header only triggers animation, no website opens */}
             <button
