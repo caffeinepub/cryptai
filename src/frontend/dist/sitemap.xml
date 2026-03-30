@@ -1,8 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://creamycryptoai.org/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://creamycryptoai.org/#/ai</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://creamycryptoai.org/#/cryptoandmarket</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://creamycryptoai.org/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://creamycryptoai.org/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://creamycryptoai.org/" />
+  </url>
+
+  <!-- AI Research Page -->
+  <url>
+    <loc>https://creamycryptoai.org/#/ai</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://creamycryptoai.org/#/ai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://creamycryptoai.org/#/ai" />
+  </url>
+
+  <!-- Crypto & Market Page -->
+  <url>
+    <loc>https://creamycryptoai.org/#/cryptoandmarket</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="fa" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="zh" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="ja" href="https://creamycryptoai.org/#/cryptoandmarket" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://creamycryptoai.org/#/cryptoandmarket" />
+  </url>
+
+  <!-- Content Pages -->
   <url><loc>https://creamycryptoai.org/#/page-1</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://creamycryptoai.org/#/page-2</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://creamycryptoai.org/#/page-3</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>

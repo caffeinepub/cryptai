@@ -5,6 +5,7 @@ import { Header } from "./components/Header";
 import { LoginRegisterModal } from "./components/LoginRegisterModal";
 import { MusicPlayer, MusicPlayerCollapsedBar } from "./components/MusicPlayer";
 import { RegisterPrompt } from "./components/RegisterPrompt";
+import { SEOHead } from "./components/SEOHead";
 import { StickerOverlay } from "./components/StickerOverlay";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -79,6 +80,8 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+      {/* Dynamic SEO meta tags -- updates per language */}
+      <SEOHead />
       <Header navigate={navigate} />
       {/* Music player — persists across route changes, appears directly below header */}
       <MusicPlayer />
