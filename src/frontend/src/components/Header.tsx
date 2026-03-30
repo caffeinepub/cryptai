@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CircleDot, Info, Menu, Moon, Sun, User, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SOCIAL_LINKS } from "../config/app.config";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 import { triggerPlayerOpen } from "../contexts/MusicPlayerContext";
@@ -42,7 +41,6 @@ export function Header({ navigate }: HeaderProps) {
     ? `${connectedAddress.slice(0, 6)}...${connectedAddress.slice(-4)}`
     : null;
 
-  // Register global callback for PlanCards "Register for free" button
   useEffect(() => {
     setRegisterCallback(() => {
       setAuthTab("register");
@@ -64,7 +62,6 @@ export function Header({ navigate }: HeaderProps) {
     return `${m}:${s.toString().padStart(2, "0")}`;
   };
 
-  // Header logo: triggers animation + opens music player
   const handleLogoClick = () => {
     triggerSticker();
     triggerPlayerOpen();
@@ -73,39 +70,41 @@ export function Header({ navigate }: HeaderProps) {
   return (
     <>
       <header className="sticky top-0 z-30 w-full border-b border-border bg-background backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[140px] flex items-center justify-between gap-2 sm:gap-4">
-          {/* Left: Hamburger */}
-          <button
-            type="button"
-            onClick={() => setMenuOpen(true)}
-            className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
-            aria-label="Open menu"
-            data-ocid="nav.open_modal_button"
-          >
-            <Menu size={22} />
-          </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          {/* ── Single row on desktop (md+), two rows on mobile ── */}
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 py-2 md:flex-nowrap md:py-0 md:h-[80px]">
+            {/* LEFT: Hamburger — always first */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              aria-label="Open menu"
+              data-ocid="nav.open_modal_button"
+            >
+              <Menu size={22} />
+            </button>
 
-          {/* Brand: text + logo on right of text */}
-          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* BRAND: takes remaining space on mobile row 1, fixed-width on desktop */}
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="flex flex-col items-start gap-0.5 font-display font-bold tracking-tight"
+              className="flex flex-col items-start gap-0.5 font-display font-bold tracking-tight flex-1 min-w-0"
               data-ocid="nav.home.link"
             >
-              <span className="text-foreground text-xl">
+              <span className="text-foreground text-lg sm:text-xl leading-tight truncate">
                 {t("researchers_community")}
               </span>
               <span
-                className="text-muted-foreground font-normal"
-                style={{ fontSize: "0.9em" }}
+                className="text-muted-foreground font-normal leading-tight"
+                style={{ fontSize: "0.85em" }}
               >
                 <span style={{ color: "#D4AF37" }}>
                   {t("smarter_research")}
                 </span>
               </span>
             </button>
-            {/* Logo/Mustache: triggers animation + opens music player */}
+
+            {/* LOGO/MUSTACHE — stays on row 1 next to brand */}
             <button
               type="button"
               onClick={handleLogoClick}
@@ -116,159 +115,157 @@ export function Header({ navigate }: HeaderProps) {
               <img
                 src="/assets/uploads/e6149769-dde7-4cf9-a544-1cede158fbd1-019d3653-1931-72e3-9b25-c3751a055916-1.png"
                 alt="CryptAI Logo"
-                className="h-[120px] w-[120px] object-contain rounded-full"
+                className="h-[64px] w-[64px] md:h-[72px] md:w-[72px] object-contain rounded-full"
               />
             </button>
-          </div>
 
-          {/* Spacer */}
-          <div className="flex-1" />
+            {/* SPACER — pushes right-side controls to the far right on desktop */}
+            <div className="hidden md:block flex-1" />
 
-          {/* Language selector — always visible */}
-          <select
-            value={currentLanguage}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="bg-transparent text-muted-foreground text-xs sm:text-sm border border-border rounded-md px-1.5 sm:px-2 py-1 hover:text-foreground transition-colors cursor-pointer flex-shrink-0"
-            data-ocid="nav.language.select"
-          >
-            {availableLanguages.map((lang) => (
-              <option key={lang.code} value={lang.code} className="bg-card">
-                {lang.label}
-              </option>
-            ))}
-          </select>
-
-          {/* Theme toggle */}
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
-            aria-label={theme === "dark" ? t("light_mode") : t("dark_mode")}
-            data-ocid="nav.theme.toggle"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-
-          {/* Login/Register or User menu */}
-          {isLoggedIn && currentUser ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
-                  type="button"
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-sm font-medium text-foreground transition-colors flex-shrink-0"
-                  data-ocid="nav.user.button"
-                >
-                  <User size={14} />
-                  <span className="hidden sm:inline max-w-[80px] truncate">
-                    {currentUser.username.slice(0, 10)}
-                  </span>
-                </button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                className="bg-card border-border"
+            {/* RIGHT CONTROLS
+                On mobile: width 100%, new row (order-last), evenly spaced
+                On desktop: inline after spacer */}
+            <div className="w-full md:w-auto flex items-center justify-end flex-wrap gap-1.5 sm:gap-2 order-last md:order-none">
+              {/* Language selector */}
+              <select
+                value={currentLanguage}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="bg-transparent text-muted-foreground text-xs border border-border rounded-md px-1.5 py-1 hover:text-foreground transition-colors cursor-pointer flex-shrink-0"
+                data-ocid="nav.language.select"
               >
-                <DropdownMenuItem
-                  onClick={() => setAccountOpen(true)}
-                  className="cursor-pointer"
-                  data-ocid="nav.account_settings.button"
-                >
-                  {t("account_settings")}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={logout}
-                  className="cursor-pointer text-destructive"
-                  data-ocid="nav.logout.button"
-                >
-                  {t("logout")}
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className="flex items-center gap-1.5 flex-shrink-0">
-              {/* Timer badge — show for all unregistered users while timer is active */}
-              {!isLoggedIn && !timeExpired && (
-                <span
-                  className="hidden sm:flex items-center text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
-                  data-ocid="nav.timer.badge"
-                >
-                  ⏱ {formatTimer(secondsLeft)}
-                </span>
+                {availableLanguages.map((lang) => (
+                  <option key={lang.code} value={lang.code} className="bg-card">
+                    {lang.label}
+                  </option>
+                ))}
+              </select>
+
+              {/* Theme toggle */}
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+                aria-label={theme === "dark" ? t("light_mode") : t("dark_mode")}
+                data-ocid="nav.theme.toggle"
+              >
+                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+
+              {/* Login/Register or User menu */}
+              {isLoggedIn && currentUser ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs sm:text-sm font-medium text-foreground transition-colors flex-shrink-0"
+                      data-ocid="nav.user.button"
+                    >
+                      <User size={14} />
+                      <span className="max-w-[80px] truncate">
+                        {currentUser.username.slice(0, 10)}
+                      </span>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-card border-border"
+                  >
+                    <DropdownMenuItem
+                      onClick={() => setAccountOpen(true)}
+                      className="cursor-pointer"
+                      data-ocid="nav.account_settings.button"
+                    >
+                      {t("account_settings")}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={logout}
+                      className="cursor-pointer text-destructive"
+                      data-ocid="nav.logout.button"
+                    >
+                      {t("logout")}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  {!isLoggedIn && !timeExpired && (
+                    <span
+                      className="hidden sm:flex items-center text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
+                      data-ocid="nav.timer.badge"
+                    >
+                      ⏱ {formatTimer(secondsLeft)}
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={openLogin}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-accent text-xs font-medium text-foreground transition-colors"
+                    data-ocid="nav.login_register.button"
+                  >
+                    <User size={14} />
+                    <span>{t("login_register")}</span>
+                  </button>
+                </div>
               )}
-              <button
-                type="button"
-                onClick={openLogin}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-accent text-xs sm:text-sm font-medium text-foreground transition-colors"
-                data-ocid="nav.login_register.button"
-              >
-                <User size={14} />
-                <span className="hidden sm:inline">{t("login_register")}</span>
-                <span className="sm:hidden">{t("login")}</span>
-              </button>
-            </div>
-          )}
 
-          {/* Connect Wallet button */}
-          <div className="relative flex-shrink-0">
-            {isConnected ? (
-              <button
-                type="button"
-                onClick={disconnectWallet}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-border bg-accent hover:bg-muted text-sm font-medium text-foreground transition-colors"
-                data-ocid="nav.wallet.button"
-              >
-                <CircleDot size={14} className="text-success" />
-                <span className="hidden sm:inline">{shortAddr}</span>
-                <span className="text-xs text-muted-foreground hidden md:inline">
-                  <img
-                    src={
-                      walletType === "metamask"
-                        ? "/assets/generated/wallet-metamask-transparent.dim_200x200.png"
-                        : "/assets/uploads/download-019d36f9-e872-744d-8815-caf0b78f05f2-1.png"
-                    }
-                    alt={walletType ?? "wallet"}
-                    className={`h-5 w-5 object-contain${walletType === "phantom" ? " rounded-md" : ""}`}
-                  />
-                </span>
-              </button>
-            ) : (
-              <div
-                onMouseEnter={() => setShowTooltip(true)}
-                onMouseLeave={() => setShowTooltip(false)}
-              >
-                <button
-                  type="button"
-                  onClick={() => setWalletModalOpen(true)}
-                  className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full bg-primary text-primary-foreground text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity shadow-glow"
-                  data-ocid="nav.wallet.button"
-                >
-                  <Wallet size={15} />
-                  <span className="hidden sm:inline">
-                    {t("connect_wallet")}
-                  </span>
-                  <span className="sm:hidden">Wallet</span>
-                </button>
+              {/* Connect Wallet button */}
+              <div className="relative flex-shrink-0">
+                {isConnected ? (
+                  <button
+                    type="button"
+                    onClick={disconnectWallet}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs font-medium text-foreground transition-colors"
+                    data-ocid="nav.wallet.button"
+                  >
+                    <CircleDot size={14} className="text-success" />
+                    <span>{shortAddr}</span>
+                    <img
+                      src={
+                        walletType === "metamask"
+                          ? "/assets/generated/wallet-metamask-transparent.dim_200x200.png"
+                          : "/assets/uploads/download-019d36f9-e872-744d-8815-caf0b78f05f2-1.png"
+                      }
+                      alt={walletType ?? "wallet"}
+                      className={`h-4 w-4 object-contain${walletType === "phantom" ? " rounded-md" : ""}`}
+                    />
+                  </button>
+                ) : (
+                  <div
+                    onMouseEnter={() => setShowTooltip(true)}
+                    onMouseLeave={() => setShowTooltip(false)}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setWalletModalOpen(true)}
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-opacity shadow-glow"
+                      data-ocid="nav.wallet.button"
+                    >
+                      <Wallet size={14} />
+                      <span>{t("connect_wallet")}</span>
+                    </button>
 
-                {/* Mobile info icon */}
-                <button
-                  type="button"
-                  onClick={() => setShowTooltip((v) => !v)}
-                  className="absolute -top-1 -right-1 sm:hidden text-muted-foreground"
-                  aria-label="Wallet info"
-                  data-ocid="nav.wallet.info"
-                >
-                  <Info size={14} />
-                </button>
+                    <button
+                      type="button"
+                      onClick={() => setShowTooltip((v) => !v)}
+                      className="absolute -top-1 -right-1 md:hidden text-muted-foreground"
+                      aria-label="Wallet info"
+                      data-ocid="nav.wallet.info"
+                    >
+                      <Info size={14} />
+                    </button>
 
-                {/* Tooltip */}
-                {showTooltip && (
-                  <div className="absolute right-0 top-full mt-2 w-72 p-3 dark:bg-zinc-900 bg-white border border-border rounded-lg shadow-lg text-xs text-muted-foreground z-50">
-                    {t("wallet_disclaimer")}
+                    {showTooltip && (
+                      <div className="absolute right-0 top-full mt-2 w-64 sm:w-72 p-3 dark:bg-zinc-900 bg-white border border-border rounded-lg shadow-lg text-xs text-muted-foreground z-50">
+                        {t("wallet_disclaimer")}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
-            )}
+            </div>
+            {/* end right controls */}
           </div>
+          {/* end flex row */}
         </div>
       </header>
 
