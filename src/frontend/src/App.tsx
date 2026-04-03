@@ -6,6 +6,7 @@ import { LoginRegisterModal } from "./components/LoginRegisterModal";
 import { MusicPlayer, MusicPlayerCollapsedBar } from "./components/MusicPlayer";
 import { RegisterPrompt } from "./components/RegisterPrompt";
 import { SEOHead } from "./components/SEOHead";
+import { StarryNightBackground } from "./components/StarryNightBackground";
 import { StickerOverlay } from "./components/StickerOverlay";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
@@ -79,36 +80,48 @@ function AppContent() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      {/* Dynamic SEO meta tags -- updates per language */}
-      <SEOHead />
-      <Header navigate={navigate} />
-      {/* Music player — persists across route changes, appears directly below header */}
-      <MusicPlayer />
-      <MusicPlayerCollapsedBar />
-      <div className="flex-1">{renderPage()}</div>
-      <Footer />
-      <Toaster />
-      <StickerOverlay />
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ background: "transparent" }}
+    >
+      {/* Animated night sky canvas — fixed behind all content */}
+      <StarryNightBackground />
 
-      {/* Reading timer expired prompt */}
-      {timeExpired && !isLoggedIn && (
-        <RegisterPrompt
-          onRegister={() => {
-            setPromptTab("register");
-            setPromptModalOpen(true);
-          }}
-          onLogin={() => {
-            setPromptTab("login");
-            setPromptModalOpen(true);
-          }}
+      {/* All page content sits above the canvas */}
+      <div
+        className="relative flex flex-col min-h-screen"
+        style={{ zIndex: 1 }}
+      >
+        {/* Dynamic SEO meta tags -- updates per language */}
+        <SEOHead />
+        <Header navigate={navigate} />
+        {/* Music player — persists across route changes, appears directly below header */}
+        <MusicPlayer />
+        <MusicPlayerCollapsedBar />
+        <div className="flex-1">{renderPage()}</div>
+        <Footer />
+        <Toaster />
+        <StickerOverlay />
+
+        {/* Reading timer expired prompt */}
+        {timeExpired && !isLoggedIn && (
+          <RegisterPrompt
+            onRegister={() => {
+              setPromptTab("register");
+              setPromptModalOpen(true);
+            }}
+            onLogin={() => {
+              setPromptTab("login");
+              setPromptModalOpen(true);
+            }}
+          />
+        )}
+        <LoginRegisterModal
+          open={promptModalOpen}
+          onClose={() => setPromptModalOpen(false)}
+          defaultTab={promptTab}
         />
-      )}
-      <LoginRegisterModal
-        open={promptModalOpen}
-        onClose={() => setPromptModalOpen(false)}
-        defaultTab={promptTab}
-      />
+      </div>
     </div>
   );
 }
