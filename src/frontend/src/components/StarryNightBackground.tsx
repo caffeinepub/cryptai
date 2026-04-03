@@ -38,18 +38,21 @@ export function StarryNightBackground() {
       timer: number;
     }
 
-    const NUM_STARS = 180;
+    // 30% fewer stars (180 → 126), smaller radius
+    const NUM_STARS = 126;
     const NUM_SHOOTING = 4;
 
     const stars: Star[] = Array.from({ length: NUM_STARS }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * 1.6 + 0.3,
+      // smaller: max radius 1.1 instead of 1.6
+      radius: Math.random() * 1.0 + 0.2,
       baseAlpha: Math.random() * 0.5 + 0.4,
       alpha: Math.random() * 0.5 + 0.4,
       alphaSpeed: Math.random() * 0.008 + 0.002,
       alphaDir: Math.random() > 0.5 ? 1 : -1,
-      glowRadius: Math.random() * 7 + 2,
+      // smaller glow
+      glowRadius: Math.random() * 4 + 1.5,
     }));
 
     const shootingStars: ShootingStar[] = Array.from(
@@ -80,8 +83,8 @@ export function StarryNightBackground() {
     }
 
     function draw() {
-      // Deep dark night sky
-      ctx.fillStyle = "#00000e";
+      // Not fully black – deep dark blue-grey night sky
+      ctx.fillStyle = "#0a0a18";
       ctx.fillRect(0, 0, width, height);
 
       // Draw stars with golden twinkle

@@ -13,10 +13,15 @@ import { SOCIAL_LINKS } from "../config/app.config";
 import { useLanguage } from "../contexts/LanguageContext";
 import { triggerSticker } from "./StickerOverlay";
 
+const BANGERS: React.CSSProperties = {
+  fontFamily: "'Bangers', cursive",
+  letterSpacing: "0.04em",
+};
+const GOLD = "#D4AF37";
+
 export function Footer() {
   const { t } = useLanguage();
   const year = new Date().getFullYear();
-  const hostname = encodeURIComponent(window.location.hostname);
 
   const handleLogoClick = () => {
     triggerSticker();
@@ -47,23 +52,32 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="font-display font-bold text-xl mb-2">
-              <span style={{ color: "#D4AF37" }}>Creamy</span>
-              <span className="text-foreground">Crypto</span>
-              <span style={{ color: "#D4AF37" }}>AI</span>
-              <span className="text-foreground">.org</span>
+            <div className="font-bold text-xl mb-2" style={BANGERS}>
+              <span style={{ color: GOLD }}>Creamy</span>
+              <span style={{ color: GOLD }}>Crypto</span>
+              <span style={{ color: GOLD }}>AI</span>
+              <span style={{ color: GOLD }}>.org</span>
             </div>
-            <p className="text-muted-foreground text-sm leading-relaxed">
+            <p
+              className="text-sm leading-relaxed"
+              style={{ ...BANGERS, color: GOLD }}
+            >
               {t("footer_tagline")}
             </p>
-            <p className="text-muted-foreground text-xs leading-relaxed mt-1 italic">
+            <p
+              className="text-xs leading-relaxed mt-1 italic"
+              style={{ ...BANGERS, color: GOLD }}
+            >
               {t("hero_subtitle")}
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4 text-sm uppercase tracking-wider">
+            <h4
+              className="font-semibold mb-4 text-sm uppercase tracking-wider"
+              style={{ ...BANGERS, color: GOLD }}
+            >
               {t("footer_legal")}
             </h4>
             <ul className="space-y-2">
@@ -71,7 +85,8 @@ export function Footer() {
                 <li key={link.key}>
                   <a
                     href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    className="text-sm transition-colors hover:opacity-80"
+                    style={{ ...BANGERS, color: GOLD }}
                     data-ocid={`footer.${link.key}.link`}
                   >
                     {t(link.key)}
@@ -83,7 +98,10 @@ export function Footer() {
 
           {/* Social */}
           <div>
-            <h4 className="font-semibold text-foreground mb-4 text-sm uppercase tracking-wider flex items-center gap-2">
+            <h4
+              className="font-semibold mb-4 text-sm uppercase tracking-wider flex items-center gap-2"
+              style={{ ...BANGERS, color: GOLD }}
+            >
               cREAMY cOMMUNITY
               <button
                 type="button"
@@ -107,7 +125,8 @@ export function Footer() {
                   aria-label={label}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background transition-colors hover:opacity-80"
+                  style={{ color: GOLD }}
                   data-ocid={`footer.${label.toLowerCase().replace(/[^a-z0-9]/g, "")}.link`}
                 >
                   <Icon size={16} />
@@ -120,7 +139,8 @@ export function Footer() {
                 title="Suno"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 items-center justify-center gap-1 rounded-lg border border-border bg-background px-2.5 text-muted-foreground hover:text-foreground hover:border-primary/50 transition-colors text-xs font-medium"
+                className="flex h-10 items-center justify-center gap-1 rounded-lg border border-border bg-background px-2.5 transition-colors hover:opacity-80 text-xs font-medium"
+                style={{ ...BANGERS, color: GOLD }}
                 data-ocid="footer.suno.link"
               >
                 <Music size={14} />
@@ -130,20 +150,12 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
-          <span>
+        {/* Bottom bar – caffeine.ai link removed */}
+        <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+          <span style={{ ...BANGERS, color: GOLD }}>
             © {year} CreamyCryptoAI.org · Future Compass Lab. All rights
             reserved.
           </span>
-          <a
-            href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${hostname}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-foreground transition-colors"
-          >
-            Built with ❤️ using caffeine.ai
-          </a>
         </div>
       </div>
     </footer>

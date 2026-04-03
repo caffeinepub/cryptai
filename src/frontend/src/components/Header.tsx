@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleDot, Info, Menu, Moon, Sun, User, Wallet } from "lucide-react";
+import { CircleDot, Info, Menu, User, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -19,12 +19,18 @@ import { LoginRegisterModal } from "./LoginRegisterModal";
 import { triggerSticker } from "./StickerOverlay";
 import { WalletModal } from "./WalletModal";
 
+const BANGERS: React.CSSProperties = {
+  fontFamily: "'Bangers', cursive",
+  letterSpacing: "0.04em",
+};
+const GOLD = "#D4AF37";
+
 interface HeaderProps {
   navigate: (path: string) => void;
 }
 
 export function Header({ navigate }: HeaderProps) {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   const { t, currentLanguage, availableLanguages, setLanguage } = useLanguage();
   const { isConnected, connectedAddress, walletType, disconnectWallet } =
     useWallet();
@@ -36,6 +42,9 @@ export function Header({ navigate }: HeaderProps) {
   const [authTab, setAuthTab] = useState<"login" | "register">("login");
   const [accountOpen, setAccountOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+
+  // suppress unused warning – theme kept for potential future use
+  void theme;
 
   const shortAddr = connectedAddress
     ? `${connectedAddress.slice(0, 6)}...${connectedAddress.slice(-4)}`
@@ -77,34 +86,37 @@ export function Header({ navigate }: HeaderProps) {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className="p-2 rounded-md hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              className="p-2 rounded-md hover:bg-accent transition-colors flex-shrink-0"
+              style={{ color: GOLD }}
               aria-label="Open menu"
               data-ocid="nav.open_modal_button"
             >
               <Menu size={22} />
             </button>
 
-            {/* BRAND: takes remaining space on mobile row 1, fixed-width on desktop */}
+            {/* BRAND */}
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="flex flex-col items-start gap-0.5 font-display font-bold tracking-tight flex-1 min-w-0"
+              className="flex flex-col items-start gap-0.5 font-bold tracking-tight flex-1 min-w-0"
+              style={BANGERS}
               data-ocid="nav.home.link"
             >
-              <span className="text-foreground text-lg sm:text-xl leading-tight truncate">
+              <span
+                className="text-lg sm:text-xl leading-tight truncate"
+                style={{ color: GOLD }}
+              >
                 {t("researchers_community")}
               </span>
               <span
-                className="text-muted-foreground font-normal leading-tight"
-                style={{ fontSize: "0.85em" }}
+                className="font-normal leading-tight"
+                style={{ fontSize: "0.85em", color: GOLD }}
               >
-                <span style={{ color: "#D4AF37" }}>
-                  {t("smarter_research")}
-                </span>
+                {t("smarter_research")}
               </span>
             </button>
 
-            {/* LOGO/MUSTACHE — stays on row 1 next to brand */}
+            {/* LOGO/MUSTACHE */}
             <button
               type="button"
               onClick={handleLogoClick}
@@ -119,18 +131,17 @@ export function Header({ navigate }: HeaderProps) {
               />
             </button>
 
-            {/* SPACER — pushes right-side controls to the far right on desktop */}
+            {/* SPACER */}
             <div className="hidden md:block flex-1" />
 
-            {/* RIGHT CONTROLS
-                On mobile: width 100%, new row (order-last), evenly spaced
-                On desktop: inline after spacer */}
+            {/* RIGHT CONTROLS */}
             <div className="w-full md:w-auto flex items-center justify-end flex-wrap gap-1.5 sm:gap-2 order-last md:order-none">
               {/* Language selector */}
               <select
                 value={currentLanguage}
                 onChange={(e) => setLanguage(e.target.value)}
-                className="bg-transparent text-muted-foreground text-xs border border-border rounded-md px-1.5 py-1 hover:text-foreground transition-colors cursor-pointer flex-shrink-0"
+                className="bg-transparent text-xs border border-border rounded-md px-1.5 py-1 transition-colors cursor-pointer flex-shrink-0"
+                style={{ ...BANGERS, color: GOLD }}
                 data-ocid="nav.language.select"
               >
                 {availableLanguages.map((lang) => (
@@ -140,24 +151,14 @@ export function Header({ navigate }: HeaderProps) {
                 ))}
               </select>
 
-              {/* Theme toggle */}
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="p-2 rounded-full hover:bg-accent text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
-                aria-label={theme === "dark" ? t("light_mode") : t("dark_mode")}
-                data-ocid="nav.theme.toggle"
-              >
-                {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-              </button>
-
               {/* Login/Register or User menu */}
               {isLoggedIn && currentUser ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button
                       type="button"
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs sm:text-sm font-medium text-foreground transition-colors flex-shrink-0"
+                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs sm:text-sm font-medium transition-colors flex-shrink-0"
+                      style={{ ...BANGERS, color: GOLD }}
                       data-ocid="nav.user.button"
                     >
                       <User size={14} />
@@ -173,6 +174,7 @@ export function Header({ navigate }: HeaderProps) {
                     <DropdownMenuItem
                       onClick={() => setAccountOpen(true)}
                       className="cursor-pointer"
+                      style={{ ...BANGERS, color: GOLD }}
                       data-ocid="nav.account_settings.button"
                     >
                       {t("account_settings")}
@@ -180,6 +182,7 @@ export function Header({ navigate }: HeaderProps) {
                     <DropdownMenuItem
                       onClick={logout}
                       className="cursor-pointer text-destructive"
+                      style={BANGERS}
                       data-ocid="nav.logout.button"
                     >
                       {t("logout")}
@@ -190,7 +193,8 @@ export function Header({ navigate }: HeaderProps) {
                 <div className="flex items-center gap-1.5 flex-shrink-0">
                   {!isLoggedIn && !timeExpired && (
                     <span
-                      className="hidden sm:flex items-center text-xs font-mono text-muted-foreground bg-muted px-2 py-0.5 rounded-full"
+                      className="hidden sm:flex items-center text-xs font-mono bg-muted px-2 py-0.5 rounded-full"
+                      style={{ color: GOLD }}
                       data-ocid="nav.timer.badge"
                     >
                       ⏱ {formatTimer(secondsLeft)}
@@ -199,7 +203,8 @@ export function Header({ navigate }: HeaderProps) {
                   <button
                     type="button"
                     onClick={openLogin}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-accent text-xs font-medium text-foreground transition-colors"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-accent text-xs font-medium transition-colors"
+                    style={{ ...BANGERS, color: GOLD }}
                     data-ocid="nav.login_register.button"
                   >
                     <User size={14} />
@@ -214,7 +219,8 @@ export function Header({ navigate }: HeaderProps) {
                   <button
                     type="button"
                     onClick={disconnectWallet}
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs font-medium text-foreground transition-colors"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-accent hover:bg-muted text-xs font-medium transition-colors"
+                    style={{ ...BANGERS, color: GOLD }}
                     data-ocid="nav.wallet.button"
                   >
                     <CircleDot size={14} className="text-success" />
@@ -238,6 +244,7 @@ export function Header({ navigate }: HeaderProps) {
                       type="button"
                       onClick={() => setWalletModalOpen(true)}
                       className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary text-primary-foreground text-xs font-semibold hover:opacity-90 transition-opacity shadow-glow"
+                      style={BANGERS}
                       data-ocid="nav.wallet.button"
                     >
                       <Wallet size={14} />
@@ -255,7 +262,10 @@ export function Header({ navigate }: HeaderProps) {
                     </button>
 
                     {showTooltip && (
-                      <div className="absolute right-0 top-full mt-2 w-64 sm:w-72 p-3 dark:bg-zinc-900 bg-white border border-border rounded-lg shadow-lg text-xs text-muted-foreground z-50">
+                      <div
+                        className="absolute right-0 top-full mt-2 w-64 sm:w-72 p-3 dark:bg-zinc-900 bg-white border border-border rounded-lg shadow-lg text-xs z-50"
+                        style={{ ...BANGERS, color: GOLD }}
+                      >
                         {t("wallet_disclaimer")}
                       </div>
                     )}
