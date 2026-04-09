@@ -11,7 +11,6 @@ import {
 } from "react-icons/si";
 import { SOCIAL_LINKS } from "../config/app.config";
 import { useLanguage } from "../contexts/LanguageContext";
-import { triggerSticker } from "./StickerOverlay";
 
 const BANGERS: React.CSSProperties = {
   fontFamily: "'Bangers', cursive",
@@ -24,7 +23,6 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   const handleLogoClick = () => {
-    triggerSticker();
     window.open(SOCIAL_LINKS.creamcoin, "_blank", "noopener,noreferrer");
   };
 
@@ -39,17 +37,10 @@ export function Footer() {
     { icon: SiInstagram, label: "Instagram", href: SOCIAL_LINKS.instagram },
   ];
 
-  const legalLinks = [
-    { key: "footer_impressum" as const, href: "/" },
-    { key: "footer_datenschutz" as const, href: "/" },
-    { key: "footer_terms" as const, href: "/" },
-    { key: "footer_kontakt" as const, href: "/" },
-  ];
-
   return (
     <footer className="border-t border-border bg-card mt-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {/* Brand */}
           <div>
             <div className="font-bold text-xl mb-2" style={BANGERS}>
@@ -70,30 +61,6 @@ export function Footer() {
             >
               {t("hero_subtitle")}
             </p>
-          </div>
-
-          {/* Links */}
-          <div>
-            <h4
-              className="font-semibold mb-4 text-sm uppercase tracking-wider"
-              style={{ ...BANGERS, color: GOLD }}
-            >
-              {t("footer_legal")}
-            </h4>
-            <ul className="space-y-2">
-              {legalLinks.map((link) => (
-                <li key={link.key}>
-                  <a
-                    href={link.href}
-                    className="text-sm transition-colors hover:opacity-80"
-                    style={{ ...BANGERS, color: GOLD }}
-                    data-ocid={`footer.${link.key}.link`}
-                  >
-                    {t(link.key)}
-                  </a>
-                </li>
-              ))}
-            </ul>
           </div>
 
           {/* Social */}
@@ -150,7 +117,7 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Bottom bar – caffeine.ai link removed */}
+        {/* Bottom bar */}
         <div className="border-t border-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
           <span style={{ ...BANGERS, color: GOLD }}>
             © {year} CreamyCryptoAI.org · Future Compass Lab. All rights

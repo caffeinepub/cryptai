@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { CircleDot, Info, Menu, User, Wallet } from "lucide-react";
+import { CircleDot, Info, Menu, Music, User, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -16,7 +16,6 @@ import { setRegisterCallback } from "../utils/registerTrigger";
 import { AccountSettingsModal } from "./AccountSettingsModal";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { LoginRegisterModal } from "./LoginRegisterModal";
-import { triggerSticker } from "./StickerOverlay";
 import { WalletModal } from "./WalletModal";
 
 const BANGERS: React.CSSProperties = {
@@ -43,7 +42,7 @@ export function Header({ navigate }: HeaderProps) {
   const [accountOpen, setAccountOpen] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  // suppress unused warning – theme kept for potential future use
+  // suppress unused warning
   void theme;
 
   const shortAddr = connectedAddress
@@ -72,7 +71,6 @@ export function Header({ navigate }: HeaderProps) {
   };
 
   const handleLogoClick = () => {
-    triggerSticker();
     triggerPlayerOpen();
   };
 
@@ -94,11 +92,11 @@ export function Header({ navigate }: HeaderProps) {
               <Menu size={22} />
             </button>
 
-            {/* BRAND */}
+            {/* BRAND TEXT — hidden on small screens, visible md+ */}
             <button
               type="button"
               onClick={() => navigate("/")}
-              className="flex flex-col items-start gap-0.5 font-bold tracking-tight flex-1 min-w-0"
+              className="hidden md:flex flex-col items-start gap-0.5 font-bold tracking-tight flex-1 min-w-0"
               style={BANGERS}
               data-ocid="nav.home.link"
             >
@@ -116,11 +114,11 @@ export function Header({ navigate }: HeaderProps) {
               </span>
             </button>
 
-            {/* LOGO/MUSTACHE */}
+            {/* LOGO/MUSTACHE — always visible, centered on mobile */}
             <button
               type="button"
               onClick={handleLogoClick}
-              className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity"
+              className="flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity md:mx-0 mx-auto"
               aria-label="cREAMY cOMMUNITY – Open Creamy Vibes Player"
               title="Open Creamy Vibes Player"
             >
@@ -131,11 +129,23 @@ export function Header({ navigate }: HeaderProps) {
               />
             </button>
 
-            {/* SPACER */}
+            {/* SPACER — desktop only */}
             <div className="hidden md:block flex-1" />
 
             {/* RIGHT CONTROLS */}
             <div className="w-full md:w-auto flex items-center justify-end flex-wrap gap-1.5 sm:gap-2 order-last md:order-none">
+              {/* Creamy Vibes button */}
+              <button
+                type="button"
+                onClick={() => triggerPlayerOpen()}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-accent text-xs font-medium transition-colors flex-shrink-0"
+                style={{ ...BANGERS, color: GOLD }}
+                data-ocid="nav.creamy_vibes.button"
+              >
+                <Music size={14} />
+                <span>Creamy Vibes</span>
+              </button>
+
               {/* Language selector */}
               <select
                 value={currentLanguage}

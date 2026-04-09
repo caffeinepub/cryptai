@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -90,8 +92,28 @@
 
   body {
     @apply text-foreground;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: "Bangers", cursive;
     font-feature-settings: "rlig" 1, "calt" 1;
+    color: #fff8e7;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Bangers", cursive;
+    text-transform: uppercase;
+    color: #d4af37;
+    letter-spacing: 0.04em;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: "Bangers", cursive;
   }
 }
 

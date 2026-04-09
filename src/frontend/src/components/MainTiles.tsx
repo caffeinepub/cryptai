@@ -14,7 +14,7 @@ export function MainTiles({ navigate }: MainTilesProps) {
       <button
         type="button"
         onClick={() => navigate("/ai")}
-        className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-left transition-all duration-300 hover:border-primary/50 hover:scale-[1.01] hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary/50"
+        className="group relative overflow-hidden rounded-2xl border border-[#D4AF37] bg-card p-8 text-left transition-all duration-300 hover:border-primary/50 hover:scale-[1.01] hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary/50"
         data-ocid="main.ai.button"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -42,7 +42,7 @@ export function MainTiles({ navigate }: MainTilesProps) {
       <button
         type="button"
         onClick={() => navigate("/cryptoandmarket")}
-        className="group relative overflow-hidden rounded-2xl border border-border bg-card p-8 text-left transition-all duration-300 hover:border-primary/50 hover:scale-[1.01] hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary/50"
+        className="group relative overflow-hidden rounded-2xl border border-[#D4AF37] bg-card p-8 text-left transition-all duration-300 hover:border-primary/50 hover:scale-[1.01] hover:shadow-glow focus:outline-none focus:ring-2 focus:ring-primary/50"
         data-ocid="main.crypto.button"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />

@@ -7,7 +7,6 @@ import { MusicPlayer, MusicPlayerCollapsedBar } from "./components/MusicPlayer";
 import { RegisterPrompt } from "./components/RegisterPrompt";
 import { SEOHead } from "./components/SEOHead";
 import { StarryNightBackground } from "./components/StarryNightBackground";
-import { StickerOverlay } from "./components/StickerOverlay";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { MembershipProvider } from "./contexts/MembershipContext";
@@ -101,7 +100,6 @@ function AppContent() {
         <div className="flex-1">{renderPage()}</div>
         <Footer />
         <Toaster />
-        <StickerOverlay />
 
         {/* Reading timer expired prompt */}
         {timeExpired && !isLoggedIn && (
